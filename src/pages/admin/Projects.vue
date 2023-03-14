@@ -32,7 +32,9 @@
                       <td>{{ index+1 }}</td>
                       <td>{{ project.name }}</td>
                       <td class="d-flex justify-content-end">
-                          <Button type="button" variant="primary" soft class="" as="RouterLink" to="">Edit</Button> 
+                        <router-link :to="{ name: 'EditProject', params: { id: project.id } }">
+                          <Button type="button" variant="primary" soft>Edit</Button> 
+                        </router-link>
                           <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
                       </td>
                   </tr>

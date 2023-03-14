@@ -9,12 +9,16 @@ const CreateUser = () => import('@/pages/admin/CreateUser');
 const ManageUsers = () => import('@/pages/admin/ManageUsers');
 const Managers = () => import('@/pages/admin/Managers');
 const CreateManager = () => import('@/pages/admin/CreateManager');
+const EditManager = () => import('@/pages/admin/EditManager');
 const Bedrooms = () => import('@/pages/admin/Bedrooms');
+const EditBedroom = () => import('@/pages/admin/EditBedroom');
 const CreateBedrooms = () => import('@/pages/admin/CreateBedrooms');
 const Currencies = () => import('@/pages/admin/Currencies');
 const CreateCurrency = () => import('@/pages/admin/CreateCurrency');
+const EditCurrency = () => import('@/pages/admin/EditCurrency');
 const Projects = () => import('@/pages/admin/Projects');
 const CreateProject = () => import('@/pages/admin/CreateProject');
+const EditProject = () => import('@/pages/admin/EditProject');
 
 
 // Manager pages
@@ -95,9 +99,19 @@ const routes = [
         component: CreateManager
       },
       {
+          path: ':id/edit-manager/',
+          name: 'EditManager',
+          component: EditManager
+      },
+      {
         path: 'bedrooms',
         name: 'Bedrooms',
         component: Bedrooms
+      },
+      {
+        path: ':id/edit-bedroom/',
+        name: 'EditBedroom',
+        component: EditBedroom
       },
       {
         path: 'bedroom/create',
@@ -115,6 +129,11 @@ const routes = [
         component: CreateCurrency
       },
       {
+        path: ':id/edit-currency/',
+        name: 'EditCurrency',
+        component: EditCurrency
+      },
+      {
         path: 'projects',
         name: 'Projects',
         component: Projects
@@ -123,6 +142,11 @@ const routes = [
         path: 'project/create',
         name: 'Create Project',
         component: CreateProject
+      },
+      {
+        path: ':id/edit-project/',
+        name: 'EditProject',
+        component: EditProject
       },
 
 
