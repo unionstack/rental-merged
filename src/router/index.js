@@ -30,8 +30,13 @@ const routes = [
   },
   {
     path: '/admin/login',
-    name: 'Admin Login',
+    name: 'AdminLogin',
     component: AdminLogin
+  },
+  {
+    path: '/manager/login',
+    name: 'ManagerLogin',
+    component: ManagerLogin
   },
 
   // Auth Routes Below
@@ -41,15 +46,15 @@ const routes = [
     beforeEnter: (to, from, next) =>{
       if(!localStorage.token)
       {
-          window.location.href='/';
+          window.location.href='/admin/login';
       }
       if(!localStorage.user)
       {
-          window.location.href='/';
+          window.location.href='/admin/login';
       }
       if(!localStorage.role)
       {
-          window.location.href='/';
+          window.location.href='/admin/login';
       }
       next();
     },
@@ -75,11 +80,11 @@ const routes = [
       //   name: 'Create User',
       //   component: CreateUser
       // },
-      // {
-      //   path: 'managers',
-      //   name: 'Managers',
-      //   component: Managers
-      // },
+      {
+        path: 'managers',
+        name: 'Managers',
+        component: Managers
+      },
       {
         path: 'manager/create',
         name: 'Create Manager',
@@ -102,13 +107,23 @@ const routes = [
   {
     path: '/manager',
     name: 'ManagerRoutes',
+    beforeEnter: (to, from, next) =>{
+      if(!localStorage.token)
+      {
+          window.location.href='/manager/login';
+      }
+      if(!localStorage.user)
+      {
+          window.location.href='/manager/login';
+      }
+      if(!localStorage.role)
+      {
+          window.location.href='/manager/login';
+      }
+      next();
+    },
     children: 
     [
-      {
-        path: 'login',
-        name: 'Manager Login',
-        component: ManagerLogin
-      },
       {
         path: 'properties',
         name: 'Manager Properties',
