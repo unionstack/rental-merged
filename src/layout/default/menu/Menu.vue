@@ -162,6 +162,42 @@ const menuData = [
             },
         ]
     },
+    {
+        id: uuidv4(),
+        icon: 'coin',
+        title: 'Currencies',
+        url:   '',
+        subMenus: [
+            {
+                id: uuidv4(),
+                title: 'Manage Currencies',
+                url: '/admin/currencies'
+            },
+            {
+                id: uuidv4(),
+                title: 'Create Currnecy',
+                url: '/admin/currency/create'
+            },
+        ]
+    },
+    {
+        id: uuidv4(),
+        icon: 'file-docs',
+        title: 'Projects',
+        url:   '',
+        subMenus: [
+            {
+                id: uuidv4(),
+                title: 'Manage Projects',
+                url: '/admin/projects'
+            },
+            {
+                id: uuidv4(),
+                title: 'Create Project',
+                url: '/admin/project/create'
+            },
+        ]
+    },
 ]
 
 export default {

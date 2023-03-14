@@ -5,7 +5,7 @@
         <CardBody class="flex-grow-0 py-2">
           <CardTitleGroup>
             <CardTitle tag="div">
-              <h3 class="title mb-3">Bedrooms</h3>
+              <h3 class="title mb-3">Projects</h3>
             </CardTitle>
             <CardTools>
               <!-- <Button type="button" variant="danger" soft class="" style="float:right;" as="RouterLink" to="">Delete Multiple Addresses</Button>  -->
@@ -19,7 +19,7 @@
       <Col xxl="12">
         <Card full>
             <div class="table-responsive">
-              <DataTable id="datatable-init-2" class="table-border" v-if="bedrooms !== null">
+              <DataTable id="datatable-init-2" class="table-border" v-if="projects !== null">
                 <TableHead>
                     <tr>
                         <th><OverlineTitle tag="span">Sr#</OverlineTitle></th>
@@ -28,9 +28,9 @@
                     </tr>
                 </TableHead>
                 <TableBody>
-                  <tr v-for="(bedroom, index) in bedrooms" v-bind:key="index">
+                  <tr v-for="(project, index) in projects" v-bind:key="index">
                       <td>{{ index+1 }}</td>
-                      <td>{{ bedroom.name }}</td>
+                      <td>{{ project.name }}</td>
                       <td class="d-flex justify-content-end">
                           <Button type="button" variant="primary" soft class="" as="RouterLink" to="">Edit</Button> 
                           <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
@@ -87,15 +87,15 @@ export default {
 },
   data(){
     return {
-      bedrooms: null,
+      projects: null,
       baseURL: process.env.VUE_APP_API_URL
     }
   },
   created(){
-    this.fetchBedrooms();
+    this.fetchprojects();
   },
   methods: {
-    fetchBedrooms(){
+    fetchprojects(){
 
       var token = localStorage.token;
 
@@ -104,11 +104,11 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
       }
-      axios.get(this.baseURL+'/api/admin/bedrooms', { headers })
+      axios.get(this.baseURL+'/api/admin/projects', { headers })
       .then(response => {
         if(response.data.status)
         {
-          this.bedrooms = response.data.data;
+          this.projects = response.data.data;
         }
       });
     }

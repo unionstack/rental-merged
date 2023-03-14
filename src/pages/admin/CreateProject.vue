@@ -6,7 +6,7 @@
           <CardBody class="flex-grow-0 py-2">
             <CardTitleGroup>
               <CardTitle tag="div">
-                <h3 class="title">Create Bedroom</h3>
+                <h3 class="title">Create Project</h3>
               </CardTitle>
               <CardTools>
                   <Button variant="primary" soft class="mx-1" type="submit">Save</Button>
@@ -35,7 +35,7 @@
                           <div class="form-group">
                               <label  class="form-label">Name</label>
                               <div class="form-control-wrap">
-                                  <FormInput type="text"  v-model="form.name" placeholder="Enter Bedrooms" required/>
+                                  <FormInput type="text"  v-model="form.name" required placeholder="Enter projects"/>
                               </div>
                           </div>
                       </div>
@@ -105,7 +105,7 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
       }
-      axios.post(this.baseURL+'/api/admin/create/bedroom', this.form, { headers })
+      axios.post(this.baseURL+'/api/admin/create/project', this.form, { headers })
       .then(response => {
         if(!response.data.status)
         {

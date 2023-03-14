@@ -11,6 +11,10 @@ const Managers = () => import('@/pages/admin/Managers');
 const CreateManager = () => import('@/pages/admin/CreateManager');
 const Bedrooms = () => import('@/pages/admin/Bedrooms');
 const CreateBedrooms = () => import('@/pages/admin/CreateBedrooms');
+const Currencies = () => import('@/pages/admin/Currencies');
+const CreateCurrency = () => import('@/pages/admin/CreateCurrency');
+const Projects = () => import('@/pages/admin/Projects');
+const CreateProject = () => import('@/pages/admin/CreateProject');
 
 
 // Manager pages
@@ -99,6 +103,26 @@ const routes = [
         path: 'bedroom/create',
         name: 'Create Bedrooms',
         component: CreateBedrooms
+      },
+      {
+        path: 'currencies',
+        name: 'Currencies',
+        component: Currencies
+      },
+      {
+        path: 'currency/create',
+        name: 'Create Currency',
+        component: CreateCurrency
+      },
+      {
+        path: 'projects',
+        name: 'Projects',
+        component: Projects
+      },
+      {
+        path: 'project/create',
+        name: 'Create Project',
+        component: CreateProject
       },
 
 
