@@ -24,13 +24,19 @@
                         <h4 class="title mb-3"></h4>
                       </CardTitle>
                   </CardTitleGroup>
-                  
+                  <div class="alert alert-danger" v-if="showError">
+                      {{ error }}
+                  </div>
+                  <div class="alert alert-success" v-if="showSuccess">
+                      {{ success }}
+                  </div>
                   <div class="row g-3 gx-gs mb-4">
                       <div class="col-md-6">
                           <div class="form-group">
                               <label  class="form-label">First Name</label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" v-model="form.first_name" required placeholder="Enter First Name"/>
+                                  <p class="formError" v-if="firstNameError">*{{ firstNameError }}</p>
                               </div>
                           </div>
                       </div>
@@ -39,6 +45,7 @@
                               <label  class="form-label">Last Name</label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" v-model="form.last_name" required placeholder="Enter Last Name"/>
+                                  <p class="formError" v-if="lastNameError">*{{ lastNameError }}</p>
                               </div>
                           </div>
                       </div>
@@ -47,6 +54,7 @@
                               <label  class="form-label">Email</label>
                               <div class="form-control-wrap">
                                   <FormInput type="email" v-model="form.email" required placeholder="Enter Email"/>
+                                  <p class="formError" v-if="emailError">*{{ emailError }}</p>
                               </div>
                           </div>
                       </div>
@@ -55,6 +63,7 @@
                               <label  class="form-label">Phone</label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" v-model="form.phone" placeholder="Enter Phone"/>
+                                  <p class="formError" v-if="phoneError">*{{ phoneError }}</p>
                               </div>
                           </div>
                       </div>
@@ -63,6 +72,7 @@
                               <label  class="form-label">Password</label>
                               <div class="form-control-wrap">
                                   <FormInput type="password" v-model="form.password" required placeholder="Enter Password"/>
+                                  <p class="formError" v-if="passwordError">*{{ passwordError }}</p>
                               </div>
                           </div>
                       </div>
@@ -74,7 +84,12 @@
     </form>
   </Layout>
 </template>
-
+<style>
+.formError{
+  font-size: 14px;
+  color: red;
+}   
+</style>
 <script>
 // @ is an alias to /src
 import Layout from '@/layout/Index.vue';
@@ -86,6 +101,7 @@ import CardTitleGroup from '@/components/uielements/card/CardTitleGroup.vue';
 import CardTitle from '@/components/uielements/card/CardTitle.vue';
 import Button from '@/components/uielements/button/Button.vue';
 import FormInput from '@/components/forms/input/FormInput.vue';
+import axios from 'axios';
 
 export default {
   name: 'AccountOrder',
@@ -102,18 +118,61 @@ export default {
   },
   data(){
     return {
+        showError: false,
+        showSuccess: false,
+        error: '',
+        success:'',
         form: {
           first_name: '',
           last_name: '',
           email: '',
           phone: '',
           password: ''
-        }
+        },
+        baseURL: process.env.VUE_APP_API_URL,
     }
   },
   methods: {
     create(e){
       e.preventDefault();
+
+      this.showError = false;
+      this.showSuccess = false;
+
+      var token = localStorage.token;
+
+      var headers = { 
+          'Authorization': 'Bearer '+ JSON.parse(token), 
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }
+      axios.post(this.baseURL+'/api/admin/create/manager', this.form, { headers })
+      .then(response => {
+        if(!response.data.status)
+        {
+          if(response.data.errors)
+          {
+            this.error = response.data.errors;
+          }else{
+            this.error = response.data.message;
+          }
+
+          this.showError = true;
+          return;
+        }
+
+        this.showError = false;
+        this.success = response.data.message;
+        this.showSuccess = true;
+        this.form.first_name = '';
+        this.form.last_name = '';
+        this.form.email = '';
+        this.form.phone = '';
+        this.form.password = '';
+      })
+      .catch(function () {
+        // console.log(e);
+      });
       
     }
   }
