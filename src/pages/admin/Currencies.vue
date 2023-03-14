@@ -19,7 +19,7 @@
       <Col xxl="12">
         <Card full>
             <div class="table-responsive">
-              <DataTable id="datatable-init-2" class="table-border" v-if="curencies !== null">
+              <DataTable id="datatable-init-2" class="table-border" v-if="currencies !== null">
                 <TableHead>
                     <tr>
                         <th><OverlineTitle tag="span">Sr#</OverlineTitle></th>
@@ -28,11 +28,13 @@
                     </tr>
                 </TableHead>
                 <TableBody>
-                  <tr v-for="(currency, index) in curencies" v-bind:key="index">
+                  <tr v-for="(currency, index) in currencies" v-bind:key="index">
                       <td>{{ index+1 }}</td>
                       <td>{{ currency.name }}</td>
                       <td class="d-flex justify-content-end">
-                          <Button type="button" variant="primary" soft class="" as="RouterLink" to="">Edit</Button> 
+                        <router-link :to="{ name: 'EditCurrency', params: { id: currency.id } }">
+                          <Button type="button" variant="primary" soft>Edit</Button> 
+                        </router-link>
                           <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
                       </td>
                   </tr>
@@ -87,15 +89,15 @@ export default {
 },
   data(){
     return {
-      curencies: null,
+      currencies: null,
       baseURL: process.env.VUE_APP_API_URL
     }
   },
   created(){
-    this.fetchcurencies();
+    this.fetchcurrencies();
   },
   methods: {
-    fetchcurencies(){
+    fetchcurrencies(){
 
       var token = localStorage.token;
 
@@ -108,7 +110,7 @@ export default {
       .then(response => {
         if(response.data.status)
         {
-          this.curencies = response.data.data;
+          this.currencies = response.data.data;
         }
       });
     }
