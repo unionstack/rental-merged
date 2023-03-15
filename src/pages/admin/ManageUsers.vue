@@ -18,7 +18,7 @@
       <Row utils="g-gs">
         <Col xxl="12">
           <Card full>
-              <div class="table-responsive">
+              <div class="table-responsive" v-if="!loading">
                 <DataTable id="datatable-init-2" class="table-border">
                   <TableHead>
                       <tr>
@@ -30,13 +30,15 @@
                       </tr>
                   </TableHead>
                   <TableBody>
-                    <tr>
-                        <td>Test User</td>
-                        <td>user@gmail.com</td>
-                        <td>123456789</td>
-                        <td>EUR</td>
+                    <tr v-for="(user, index) in users" v-bind:key="index">
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.currency }}</td>
                         <td class="d-flex justify-content-end">
-                            <Button type="button" variant="primary" soft class="" as="RouterLink" to="">Edit</Button> 
+                            <router-link :to="{ name: 'EditUser', params: { id: user.id } }">
+                              <Button type="button" variant="primary" soft>Edit</Button> 
+                            </router-link>
                             <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
                         </td>
                     </tr>
@@ -67,9 +69,7 @@
   import TableBody from '@/components/utilities/table/TableBody.vue';
   import OverlineTitle from '@/components/misc/OverlineTitle.vue';
   import DataTable from '@/components/data-tables/SimpleDataTable.vue';
-
-
-
+  import axios from 'axios';
   
   export default {
     name: 'HomePage',
@@ -93,22 +93,31 @@
   },
     data(){
       return {
-        sessionChart: {
-          labels: ["1st May","2nd May","3rd May","4th May","5th May","6th May","7th May","8th May","9th May","10th May","11th May","12th May","13th May","14th May","15th May"],
-          xAxis:  false,
-          barThickness: 6,
-          borderDash: [8, 4],
-          datasets: [
-              {
-                borderRadius: 2,
-                borderWidth: 1,
-                borderColor: this.$Colors.primary,
-                backgroundColor: this.$Colors.primary,
-                label: "Session",
-                data: [25, 35, 55, 20, 30, 17, 12, 35, 23, 52, 45, 30, 10, 50, 45]
-              },
-          ]
-        },
+        users: null,
+        loading: true,
+        baseURL: process.env.VUE_APP_API_URL
+      }
+    },
+    created(){
+      this.fetchUsers();
+    },
+    methods: {
+      fetchUsers(){
+        var token = localStorage.token;
+
+        var headers = { 
+            'Authorization': 'Bearer '+ JSON.parse(token), 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        axios.get(this.baseURL+'/api/admin/users', { headers })
+        .then(response => {
+          if(response.data.status)
+          {
+            this.users = response.data.data;
+            this.loading = false;
+          }
+        });
       }
     }
   }

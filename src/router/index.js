@@ -7,6 +7,7 @@ const AdminProperties = () => import('@/pages/admin/AdminProperties');
 const AdminCreateProperty = () => import('@/pages/admin/AdminCreateProperty');
 const CreateUser = () => import('@/pages/admin/CreateUser');
 const ManageUsers = () => import('@/pages/admin/ManageUsers');
+const EditUser = () => import('@/pages/admin/EditUser');
 const Managers = () => import('@/pages/admin/Managers');
 const CreateManager = () => import('@/pages/admin/CreateManager');
 const EditManager = () => import('@/pages/admin/EditManager');
@@ -78,16 +79,21 @@ const routes = [
       //   name: 'Create Property',
       //   component: AdminCreateProperty
       // },
-      // {
-      //   path: 'users',
-      //   name: 'Manage Users',
-      //   component: ManageUsers
-      // },
-      // {
-      //   path: 'user/create',
-      //   name: 'Create User',
-      //   component: CreateUser
-      // },
+      {
+        path: 'users',
+        name: 'Manage Users',
+        component: ManageUsers
+      },
+      {
+        path: 'user/create',
+        name: 'Create User',
+        component: CreateUser
+      },
+      {
+        path: ':id/edit-user/',
+        name: 'EditUser',
+        component: EditUser
+    },
       {
         path: 'managers',
         name: 'Managers',
