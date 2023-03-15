@@ -19,7 +19,7 @@
         <Col xxl="12">
           <Card full>
               <div class="table-responsive">
-                <DataTable id="datatable-init-2" class="table-border">
+                <DataTable id="datatable-init-2" class="table-border" v-if="properties !== null">
                   <TableHead>
                       <tr>
                           <th><OverlineTitle tag="span">Owner</OverlineTitle></th>
@@ -31,14 +31,16 @@
                       </tr>
                   </TableHead>
                   <TableBody>
-                    <tr>
-                        <td>Test owner</td>
-                        <td>Test manager</td>
-                        <td>Test project</td>
-                        <td>4</td>
-                        <td>$50000</td>
+                    <tr v-for="(property, index) in properties" v-bind:key="index">
+                        <td>{{ property.owner_id }}</td>
+                        <td>{{ property.property_manager_id }}</td>
+                        <td>{{ property.project_id }}</td>
+                        <td>{{ property.bedroom_id }}</td>
+                        <td>{{ property.list_price }} {{ property.currency_id }}</td>
                         <td class="d-flex justify-content-end">
-                            <Button type="button" variant="primary" soft class="" as="RouterLink" to="">Edit</Button> 
+                            <!-- <router-link :to="{ name: 'EditProperty', params: { id: property.id } }"> -->
+                              <Button type="button" variant="primary" soft>Edit</Button> 
+                            <!-- </router-link> -->
                             <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
                         </td>
                     </tr>
@@ -69,6 +71,7 @@
   import TableBody from '@/components/utilities/table/TableBody.vue';
   import OverlineTitle from '@/components/misc/OverlineTitle.vue';
   import DataTable from '@/components/data-tables/SimpleDataTable.vue';
+  import axios from 'axios';
 
 
 
@@ -95,22 +98,31 @@
   },
     data(){
       return {
-        sessionChart: {
-          labels: ["1st May","2nd May","3rd May","4th May","5th May","6th May","7th May","8th May","9th May","10th May","11th May","12th May","13th May","14th May","15th May"],
-          xAxis:  false,
-          barThickness: 6,
-          borderDash: [8, 4],
-          datasets: [
-              {
-                borderRadius: 2,
-                borderWidth: 1,
-                borderColor: this.$Colors.primary,
-                backgroundColor: this.$Colors.primary,
-                label: "Session",
-                data: [25, 35, 55, 20, 30, 17, 12, 35, 23, 52, 45, 30, 10, 50, 45]
-              },
-          ]
-        },
+        properties: null,
+        baseURL: process.env.VUE_APP_API_URL
+      }
+    },
+    created(){
+      this.fetchProperties();
+    },
+    methods: {
+      fetchProperties(){
+
+        var token = localStorage.token;
+
+        var headers = { 
+            'Authorization': 'Bearer '+ JSON.parse(token), 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        axios.get(this.baseURL+'/api/admin/properties', { headers })
+        .then(response => {
+          if(response.data.status)
+          {
+            this.properties = response.data.data;
+            // console.log(this.properties);
+          }
+        });
       }
     }
   }

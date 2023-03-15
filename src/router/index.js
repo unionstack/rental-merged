@@ -3,8 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // Admin pages
 const AdminLogin = () => import('@/pages/admin/AdminLogin');
+const AdminDashboard = () => import('@/pages/admin/AdminDashboard');
 const AdminProperties = () => import('@/pages/admin/AdminProperties');
 const AdminCreateProperty = () => import('@/pages/admin/AdminCreateProperty');
+const EditProperty = () => import('@/pages/admin/EditProperty');
 const CreateUser = () => import('@/pages/admin/CreateUser');
 const ManageUsers = () => import('@/pages/admin/ManageUsers');
 const EditUser = () => import('@/pages/admin/EditUser');
@@ -69,16 +71,26 @@ const routes = [
     },
     children: 
     [
-      // {
-      //   path: 'properties',
-      //   name: 'Admin Properties',
-      //   component: AdminProperties
-      // },
-      // {
-      //   path: 'property/create',
-      //   name: 'Create Property',
-      //   component: AdminCreateProperty
-      // },
+      {
+        path: 'dashboard',
+        name: 'AdminDashboard',
+        component: AdminDashboard
+      },
+      {
+        path: 'properties',
+        name: 'Admin Properties',
+        component: AdminProperties
+      },
+      {
+        path: 'property/create',
+        name: 'Create Property',
+        component: AdminCreateProperty
+      },
+      {
+        path: ':id/edit-property/',
+        name: 'EditProperty',
+        component: EditProperty
+      },
       {
         path: 'users',
         name: 'Manage Users',
@@ -93,7 +105,7 @@ const routes = [
         path: ':id/edit-user/',
         name: 'EditUser',
         component: EditUser
-    },
+      },
       {
         path: 'managers',
         name: 'Managers',
