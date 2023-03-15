@@ -1,12 +1,12 @@
 <template>
   <Layout>
-    <form @submit.prevent="create">
+    <form @submit.prevent="update">
         <Row utils="g-gs">
             <Col xxl="12">
                 <CardBody class="flex-grow-0 py-2">
                 <CardTitleGroup>
                     <CardTitle tag="div">
-                    <h3 class="title">Create Property</h3>
+                    <h3 class="title">Edit Property</h3>
                     </CardTitle>
                     <CardTools>
                         <Button variant="primary" soft class="mx-1" type="submit">Save</Button>
@@ -340,7 +340,7 @@ export default {
         }
         });
     },
-    create(e){
+    update(e){
       e.preventDefault();
 
       this.showError = false;

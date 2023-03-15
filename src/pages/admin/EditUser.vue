@@ -194,7 +194,7 @@
         }
         axios.post(this.baseURL+'/api/admin/users/'+this.id+'/update', this.form, { headers })
         .then(response => {
-            console.log(response);
+            // console.log(response);
           if(!response.data.status)
           {
             if(response.data.errors)

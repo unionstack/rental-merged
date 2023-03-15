@@ -179,7 +179,7 @@ export default {
       }
       axios.post(this.baseURL+'/api/admin/create/user', this.form, { headers })
       .then(response => {
-        console.log(response);
+        // console.log(response);
         if(!response.data.status)
         {
           if(response.data.errors)
