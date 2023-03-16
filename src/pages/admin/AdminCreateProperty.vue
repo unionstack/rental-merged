@@ -35,8 +35,8 @@
                                 <div class="form-group">
                                     <label class="form-label">Owner</label>
                                     <div class="form-control-wrap">
-                                        <ChoiceSelect size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
-                                            <ChoiceSelectOption selected disabled>Search for Owner</ChoiceSelectOption>
+                                        <ChoiceSelect multiple size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
+                                            <ChoiceSelectOption disabled>Search for Owner</ChoiceSelectOption>
                                             <ChoiceSelectOption :value="owner.id" v-for="(owner, index) in owners" v-bind:key="index">{{ owner.first_name }} ({{ owner.email }})</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>

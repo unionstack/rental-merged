@@ -38,9 +38,9 @@
                         <td>{{ property.bedroom_id }}</td>
                         <td>{{ property.list_price }} {{ property.currency_id }}</td>
                         <td class="d-flex justify-content-end">
-                            <!-- <router-link :to="{ name: 'EditProperty', params: { id: property.id } }"> -->
+                            <router-link :to="{ name: 'EditProperty', params: { id: property.id } }">
                               <Button type="button" variant="primary" soft>Edit</Button> 
-                            <!-- </router-link> -->
+                            </router-link>
                             <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
                         </td>
                     </tr>
