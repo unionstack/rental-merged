@@ -29,6 +29,8 @@ const EditProject = () => import('@/pages/admin/EditProject');
 // Manager pages
 const ManagerLogin = () => import('@/pages/manager/ManagerLogin');
 const ManagerProperties = () => import('@/pages/manager/ManagerProperties');
+const ManagerEditProperty = () => import('@/pages/manager/EditProperty');
+const ManagerSettings = () => import('@/pages/manager/ManagerSettings');
 
 
 // Owner pages
@@ -211,6 +213,16 @@ const routes = [
         path: 'properties',
         name: 'Manager Properties',
         component: ManagerProperties
+      },
+      {
+        path: ':id/edit-property',
+        name: 'ManagerEditProperty',
+        component: ManagerEditProperty
+      },
+      {
+        path: 'settings',
+        name: 'ManagerSettings',
+        component: ManagerSettings
       }
     ]
   },

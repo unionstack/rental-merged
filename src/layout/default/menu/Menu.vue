@@ -175,19 +175,19 @@ if (role == "admin") {
         id: uuidv4(),
         icon: 'grid-alt',
         title: 'Dashboard',
-        url: '',
-        // subMenus: [
-        //     {
-        //         id: uuidv4(),
-        //         title: 'Manage Properties',
-        //         url: '/admin/properties'
-        //     },
-        //     {
-        //         id: uuidv4(),
-        //         title: 'Create Property',
-        //         url: '/admin/property/create'
-        //     },
-        // ]
+        url: '/manager/properties',
+    },
+    {
+        id: uuidv4(),
+        icon: 'account-setting-alt',
+        title: 'Setting',
+        url: '/manager/settings',
+    },
+    {
+        id: uuidv4(),
+        icon: 'chevron-left-round',
+        title: 'Logout',
+        url: '/manager/logout',
     }
 ]
 }
