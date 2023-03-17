@@ -92,11 +92,11 @@ const routes = [
         name: 'EditProperty',
         component: EditProperty
       },
-      {
-        path: 'assign-property',
-        name: 'Admin Properties',
-        component: AdminProperties
-      },
+      // {
+      //   path: 'assign-property',
+      //   name: 'Admin Properties',
+      //   component: AdminProperties
+      // },
       {
         path: 'assign-property/create',
         name: 'Assign Property',
