@@ -37,59 +37,10 @@ import getParents from '@/utilities/getParents';
 import slideUp from '@/utilities/slideUp';
 import slideDown from '@/utilities/slideDown';
 
-const menuData = [
-    // {
-    //     id: uuidv4(),
-    //     icon: 'dashboard',
-    //     title: 'Dashboard',
-    //     url:   '#',
-    //     subMenus: [
-    //         {
-    //             id: uuidv4(),
-    //             title: 'Default / Analytics',
-    //             url: '/'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'eCommerce',
-    //             url: '/home-ecommerce'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'Project Manage',
-    //             url: '/home-project'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'Marketing',
-    //             url: '/home-marketing'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'NFT',
-    //             url: '/home-nft'
-    //         },
-    //     ]
-    // },
-    
-    // {
-    //     id: uuidv4(),
-    //     icon: 'chat-circle',
-    //     title: 'Chat',
-    //     url: '/apps/chats',
-    // },
-    // {
-    //     id: uuidv4(),
-    //     icon: 'inbox',
-    //     title: 'Inbox',
-    //     url: '/apps/inbox',
-    // },
-    // {
-    //     id: uuidv4(),
-    //     icon: 'calendar-booking',
-    //     title: 'Calendar',
-    //     url: '/apps/calendar',
-    // },
+var role = JSON.parse(localStorage.role);
+var menuData = null;
+if (role == "admin") {
+    menuData = [
     {
         id: uuidv4(),
         icon: 'grid-alt',
@@ -216,7 +167,31 @@ const menuData = [
             },
         ]
     },
+]    
+}else if(role == "manager"){
+    menuData = [
+
+    {
+        id: uuidv4(),
+        icon: 'grid-alt',
+        title: 'Dashboard',
+        url: '',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Manage Properties',
+        //         url: '/admin/properties'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Property',
+        //         url: '/admin/property/create'
+        //     },
+        // ]
+    }
 ]
+}
+
 
 export default {
   name: 'MenuContainer',

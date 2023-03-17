@@ -8,6 +8,7 @@ const AdminProperties = () => import('@/pages/admin/AdminProperties');
 const AdminCreateProperty = () => import('@/pages/admin/AdminCreateProperty');
 const EditProperty = () => import('@/pages/admin/EditProperty');
 const AssignProperty = () => import('@/pages/admin/AssignProperty');
+const AssignProperties = () => import('@/pages/admin/AssignProperties');
 const CreateUser = () => import('@/pages/admin/CreateUser');
 const ManageUsers = () => import('@/pages/admin/ManageUsers');
 const EditUser = () => import('@/pages/admin/EditUser');
@@ -94,8 +95,8 @@ const routes = [
       },
       {
         path: 'assign-property',
-        name: 'Admin Properties',
-        component: AdminProperties
+        name: 'Assign Properties',
+        component: AssignProperties
       },
       {
         path: 'assign-property/create',

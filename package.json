@@ -38,6 +38,7 @@
     "uuid": "^9.0.0",
     "v-pagination-3": "^0.1.7",
     "vue": "^3.2.37",
+    "vue-multiselect": "^2.1.7",
     "vue-router": "^4.0.3",
     "vuedraggable": "^4.1.0",
     "vuejs-paginate-next": "^1.0.2"
