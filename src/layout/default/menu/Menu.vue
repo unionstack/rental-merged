@@ -110,6 +110,24 @@ const menuData = [
     },
     {
         id: uuidv4(),
+        icon: 'building-fill',
+        title: 'Assign Properties',
+        url:   '',
+        subMenus: [
+            {
+                id: uuidv4(),
+                title: 'Manage Assigned Properties',
+                url: '/admin/assign-property'
+            },
+            {
+                id: uuidv4(),
+                title: 'Assign Property',
+                url: '/admin/assign-property/create'
+            },
+        ]
+    },
+    {
+        id: uuidv4(),
         icon: 'users',
         title: 'Owners',
         url:   '',

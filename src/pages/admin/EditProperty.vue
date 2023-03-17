@@ -35,8 +35,8 @@
                                 <div class="form-group">
                                     <label class="form-label">Owner</label>
                                     <div class="form-control-wrap">
-                                        <ChoiceSelect size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
-                                            <ChoiceSelectOption selected disabled>Search for Owner</ChoiceSelectOption>
+                                        <ChoiceSelect multiple size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
+                                            <ChoiceSelectOption disabled>Search for Owner</ChoiceSelectOption>
                                             <ChoiceSelectOption :value="owner.id" v-for="(owner, index) in owners" v-bind:key="index">{{ owner.first_name }} ({{ owner.email }})</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
@@ -47,7 +47,7 @@
                                     <label class="form-label">Property Manager</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="property_manager" :cross="false" @change="updateManager" v-if="managers !== null">
-                                            <ChoiceSelectOption selected disabled>Search for Property Manager</ChoiceSelectOption>
+                                            <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
                                             <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
@@ -58,7 +58,7 @@
                                     <label class="form-label">Bedrooms</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="bedrooms" :cross="false" @change="updateBedroom" v-if="bedrooms !== null">
-                                            <ChoiceSelectOption selected disabled>Search for Bedrooms</ChoiceSelectOption>
+                                            <ChoiceSelectOption disabled>Search for Bedrooms</ChoiceSelectOption>
                                             <ChoiceSelectOption :value="bedroom.id" v-for="(bedroom, index) in bedrooms" v-bind:key="index">{{ bedroom.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
@@ -69,7 +69,7 @@
                                     <label class="form-label">Project</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="project" :cross="false" @change="updateProject" v-if="projects !== null">
-                                            <ChoiceSelectOption selected disabled>Search for Project</ChoiceSelectOption>
+                                            <ChoiceSelectOption disabled>Search for Project</ChoiceSelectOption>
                                             <ChoiceSelectOption :value="project.id" v-for="(project, index) in projects" v-bind:key="index">{{ project.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
@@ -217,6 +217,7 @@ export default {
   data(){
     return {
     //   loading:true,
+      id: this.$route.params.id,
       showError: false,
       showSuccess: false,
       error: '',
@@ -252,7 +253,8 @@ export default {
     this.fetchManagers();
     this.fetchProjects();
     this.fetchCurrencies();
-    this.fetchBedrooms();
+    this.fetchBedrooms()
+    this.fetchProperties();
   },
   methods: {
     fetchOwners(){
@@ -340,6 +342,40 @@ export default {
         }
         });
     },
+    fetchProperties(){
+
+        var token = localStorage.token;
+
+        var headers = { 
+            'Authorization': 'Bearer '+ JSON.parse(token), 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        axios.get(this.baseURL+'/api/admin/'+this.id+'/edit-property/', { headers })
+        .then(response => {
+        if(response.data.status)
+        {
+            this.property_data = response.data.data;
+            // console.log(this.property_data);
+            this.form.owner         = this.property_data[0].owner_id,
+            this.form.manager       = this.property_data[0].property_manager_id,
+            this.form.bedroom       = this.property_data[0].bedroom_id,
+            this.form.project       = this.property_data[0].project_id,
+            this.form.country       = this.property_data[0].country,
+            this.form.county        = this.property_data[0].county,
+            this.form.zip_code      = this.property_data[0].zip_code,
+            this.form.address       = this.property_data[0].address,
+            this.form.phone         = this.property_data[0].number,
+            this.form.type          = this.property_data[0].type,
+            this.form.area          = this.property_data[0].area,
+            this.form.building      = this.property_data[0].building_tex,
+            this.form.floor         = this.property_data[0].floor,
+            this.form.list_price    = this.property_data[0].list_price,
+            this.form.currency      = this.property_data[0].currency_id,
+            this.form.estimated_rent= this.property_data[0].estimated_rent
+        }
+        });
+    },
     update(e){
       e.preventDefault();
 
@@ -353,7 +389,7 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
       }
-      axios.post(this.baseURL+'/api/admin/create/property', this.form, { headers })
+      axios.post(this.baseURL+'/api/admin/property/'+this.id+'/update', this.form, { headers })
       .then(response => {
         if(!response.data.status)
         {
@@ -371,22 +407,8 @@ export default {
         this.showError = false;
         this.success = response.data.message;
         this.showSuccess = true;
-        this.form.owner= '',
-        this.form.manager= '',
-        this.form.bedroom= '',
-        this.form.project= '',
-        this.form.country= '',
-        this.form.county= '',
-        this.form.zip_code= '',
-        this.form.address= '',
-        this.form.phone= '',
-        this.form.type= '',
-        this.form.area= '',
-        this.form.building= '',
-        this.form.floor= '',
-        this.form.list_price= '',
-        this.form.currency= '',
-        this.form.estimated_rent= ''
+        this.fetchBedroom();
+
       })
       .catch(function () {
         // console.log(e);
