@@ -37,59 +37,10 @@ import getParents from '@/utilities/getParents';
 import slideUp from '@/utilities/slideUp';
 import slideDown from '@/utilities/slideDown';
 
-const menuData = [
-    // {
-    //     id: uuidv4(),
-    //     icon: 'dashboard',
-    //     title: 'Dashboard',
-    //     url:   '#',
-    //     subMenus: [
-    //         {
-    //             id: uuidv4(),
-    //             title: 'Default / Analytics',
-    //             url: '/'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'eCommerce',
-    //             url: '/home-ecommerce'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'Project Manage',
-    //             url: '/home-project'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'Marketing',
-    //             url: '/home-marketing'
-    //         },
-    //         {
-    //             id: uuidv4(),
-    //             title: 'NFT',
-    //             url: '/home-nft'
-    //         },
-    //     ]
-    // },
-    
-    // {
-    //     id: uuidv4(),
-    //     icon: 'chat-circle',
-    //     title: 'Chat',
-    //     url: '/apps/chats',
-    // },
-    // {
-    //     id: uuidv4(),
-    //     icon: 'inbox',
-    //     title: 'Inbox',
-    //     url: '/apps/inbox',
-    // },
-    // {
-    //     id: uuidv4(),
-    //     icon: 'calendar-booking',
-    //     title: 'Calendar',
-    //     url: '/apps/calendar',
-    // },
+var role = JSON.parse(localStorage.role);
+var menuData = null;
+if (role == "admin") {
+    menuData = [
     {
         id: uuidv4(),
         icon: 'grid-alt',
@@ -216,7 +167,54 @@ const menuData = [
             },
         ]
     },
+]    
+}else if(role == "manager"){
+    menuData = [
+
+    {
+        id: uuidv4(),
+        icon: 'grid-alt',
+        title: 'Dashboard',
+        url: '/manager/properties',
+    },
+    {
+        id: uuidv4(),
+        icon: 'account-setting-alt',
+        title: 'Setting',
+        url: '/manager/settings',
+    },
+    {
+        id: uuidv4(),
+        icon: 'chevron-left-round',
+        title: 'Logout',
+        url: '/manager/logout',
+    }
 ]
+}
+else if(role == "user"){
+    menuData = [
+
+    {
+        id: uuidv4(),
+        icon: 'grid-alt',
+        title: 'Dashboard',
+        url: '/user/properties',
+    },
+    {
+        id: uuidv4(),
+        icon: 'account-setting-alt',
+        title: 'Setting',
+        url: '/user/settings',
+    },
+    {
+        id: uuidv4(),
+        icon: 'chevron-left-round',
+        title: 'Logout',
+        url: '/user/logout',
+    }
+]
+}
+
 
 export default {
   name: 'MenuContainer',

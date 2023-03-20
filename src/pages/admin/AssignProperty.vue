@@ -46,10 +46,9 @@
                                 <div class="form-group">
                                     <label class="form-label">Property Manager</label>
                                     <div class="form-control-wrap">
-                                        <ChoiceSelect multiple size="sm" id="property_manager" :cross="false" @change="updateManager" v-if="managers !== null">
-                                            <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</ChoiceSelectOption>
-                                        </ChoiceSelect>
+                                        <select multiple="true" v-model="form.managers" class="form-control form-select" v-if="managers !== null">
+                                            <option :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -77,6 +76,7 @@ import ChoiceSelect from '@/components/choices/ChoiceSelect.vue';
 import ChoiceSelectOption from '@/components/choices/ChoiceSelectOption.vue';
 // import FormInput from '@/components/forms/input/FormInput.vue';
 import axios from 'axios';
+// import Multiselect from 'vue-multiselect'
 
 export default {
   name: 'AccountOrder',
@@ -92,6 +92,7 @@ export default {
     ChoiceSelect,
     ChoiceSelectOption,
     // FormInput,
+    // Multiselect
   },
   data(){
     return {
@@ -102,7 +103,7 @@ export default {
       success:'',
       form: {
         property: '',
-        manager: '',
+        managers: []
       },
       properties: null,
       managers: null,
@@ -179,7 +180,7 @@ export default {
         this.success = response.data.message;
         this.showSuccess = true;
         this.form.property= '',
-        this.form.manager= ''
+        this.form.managers= ''
       })
       .catch(function () {
         // console.log(e);
@@ -190,10 +191,12 @@ export default {
     {
       this.form.property = e.target.value;
     },
-    updateManager(e)
-    {
-      this.form.manager = e.target.value;
-    }
+    // updateManager(e)
+    // {
+    //     console.log(e.target.value);
+    //     this.form.manager = e.target.value;
+    //     this.form.values = e.target.value;
+    // }
   }
 }
 </script>

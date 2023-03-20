@@ -18,8 +18,8 @@
       <Row utils="g-gs">
         <Col xxl="12">
           <Card full>
-              <div class="table-responsive">
-                <DataTable id="datatable-init-2" class="table-border">
+              <div class="table-responsive px-2">
+                <DataTable id="datatable-init-2" class="table-border" v-if="properties !== null">
                   <TableHead>
                       <tr>
                           <th><OverlineTitle tag="span">Owner</OverlineTitle></th>
@@ -27,27 +27,180 @@
                           <th><OverlineTitle tag="span">Bedrooms</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Area</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Price</OverlineTitle></th>
-                          <th><OverlineTitle tag="span">Action</OverlineTitle></th>
+                          <th><OverlineTitle tag="span"></OverlineTitle></th>
                       </tr>
                   </TableHead>
                   <TableBody>
-                    <tr>
-                        <td>Test owner</td>
-                        <td>Test project</td>
-                        <td>4</td>
-                        <td>xyz</td>
-                        <td>$50000</td>
-                        <td>
-                            <Button type="button" variant="primary" soft class="" as="RouterLink" to="">Edit</Button> 
-                            <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
-                        </td>
-                    </tr>
+                    <tr v-for="(property, index) in properties" v-bind:key="index">
+                      <td v-if="property.owner !== null">
+                        <div v-for="(property_owner, index2) in property.owner" v-bind:key="index2">
+                          <span>{{ property_owner }}</span> 
+                        </div>
+                         
+                      </td>
+                      <td>{{ property.project }}</td>
+                      <td>{{ property.bedroom }}</td>
+                      <td>{{ property.property.area }}</td>
+                      <td>{{ property.property.list_price }} {{ property.currency }}</td>
+                      <td class="d-flex justify-content-end">
+                          <Button type="button" :id="`view-`+property.id+`-`+index" variant="info" soft class="mx-2">View Details</Button>
+                          <router-link :to="{ name: 'ManagerEditProperty', params: { id: property.id } }">
+                            <Button type="button" variant="primary" soft>Edit</Button> 
+                          </router-link> 
+                      </td>
+                  </tr>
                   </TableBody>
                 </DataTable>
               </div>
           </Card>
         </Col>
       </Row>
+      <ModalContainer animation="fade" id="PropertyDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <ModalDialog size="lg" position="top">
+            <ModalContent>
+              <ModalHeader>
+                  <h5 class="modal-title" id="exampleModalLabel">Property Details</h5>
+                  <ButtonClose dismiss="modal"></ButtonClose>
+              </ModalHeader>
+              <ModalBody>
+                <div class="row" v-if="pro_d !== null">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Owners: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;" v-for="(owner_name, index3) in pro_d.owner" v-bind:key="index3">
+                          {{ owner_name }} <br>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Project: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.project}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Bedrooms: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.bedroom}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Address: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.address}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Country: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.country}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>County: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.county}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Zip Code: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.zip_code}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Type: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.type}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Area: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.area}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Building: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.building_tex}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Floor: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.floor}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Estimated Rent: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.estimated_rent}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group d-flex justify-content-start align-items-center">
+                      <div class="pe-2">
+                        <label for=""><b>Currency: </b></label>
+                      </div>
+                      <div>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.currency}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ModalBody>
+            </ModalContent>
+        </ModalDialog>
+      </ModalContainer>
     </Layout>
 
 
@@ -62,17 +215,23 @@
   import CardBody from '@/components/uielements/card/CardBody.vue';
   import CardTitleGroup from '@/components/uielements/card/CardTitleGroup.vue';
   import CardTitle from '@/components/uielements/card/CardTitle.vue';
-//   import Icon from '@/components/icon/Icon.vue';
   import Button from '@/components/uielements/button/Button.vue';
   import CardTools from '@/components/uielements/card/CardTools.vue';
   import TableHead from '@/components/utilities/table/TableHead.vue';
   import TableBody from '@/components/utilities/table/TableBody.vue';
   import OverlineTitle from '@/components/misc/OverlineTitle.vue';
   import DataTable from '@/components/data-tables/SimpleDataTable.vue';
+  import ModalContainer from '@/components/uielements/modal/ModalContainer.vue';
+  import ModalDialog from '@/components/uielements/modal/ModalDialog.vue';
+  import ModalContent from '@/components/uielements/modal/ModalContent.vue';
+  import ModalHeader from '@/components/uielements/modal/ModalHeader.vue';
+  import ModalBody from '@/components/uielements/modal/ModalBody.vue';
+  import ButtonClose from '@/components/uielements/button-close/ButtonClose.vue';
+  import axios from 'axios';
+  import $ from 'jquery';
+  import { Modal } from 'bootstrap';
 
 
-
-  
   export default {
     name: 'HomePage',
     components: {
@@ -83,34 +242,67 @@
       CardBody,
       CardTitleGroup,
       CardTitle,
-    //   Icon,
-      // Media,
       Button,
       CardTools,
       TableHead,
       TableBody,
       OverlineTitle,
       DataTable,
+      ModalContainer,
+      ModalDialog,
+      ModalContent,
+      ModalHeader,
+      ModalBody,
+      ButtonClose
      
   },
-    data(){
+  data(){
       return {
-        sessionChart: {
-          labels: ["1st May","2nd May","3rd May","4th May","5th May","6th May","7th May","8th May","9th May","10th May","11th May","12th May","13th May","14th May","15th May"],
-          xAxis:  false,
-          barThickness: 6,
-          borderDash: [8, 4],
-          datasets: [
-              {
-                borderRadius: 2,
-                borderWidth: 1,
-                borderColor: this.$Colors.primary,
-                backgroundColor: this.$Colors.primary,
-                label: "Session",
-                data: [25, 35, 55, 20, 30, 17, 12, 35, 23, 52, 45, 30, 10, 50, 45]
-              },
-          ]
-        },
+        properties: null,
+        baseURL: process.env.VUE_APP_API_URL,
+        owners:null,
+        pro_d: null
+      }
+    },
+    created(){
+      this.fetchProperties();
+    },
+    mounted() {
+      $('body').on('click', 'button', (event) => {
+        const button = $(event.target);
+        var idStr = button[0].id;
+        var ex = idStr.split("-");
+        // var id = ex[1];
+        var index = ex[2];
+
+        if(ex[0] == 'view'){
+          this.pro_d = this.properties[index];
+          console.log(this.pro_d);
+          const modal = new Modal("#PropertyDetailsModal");
+          modal.show();
+        }
+      });
+    },
+    methods: {
+      fetchProperties(){
+
+        var token = localStorage.token;
+
+        var headers = { 
+            'Authorization': 'Bearer '+ JSON.parse(token), 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        axios.get(this.baseURL+'/api/manager/properties', { headers })
+        .then(response => {
+          if(response.data.status)
+          {
+            // console.log(response.data.data);
+            this.properties = response.data.data;
+            this.owners = this.properties.owner;
+            // console.log(response.data.data);
+          }
+        });
       }
     }
   }

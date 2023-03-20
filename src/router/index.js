@@ -8,6 +8,7 @@ const AdminProperties = () => import('@/pages/admin/AdminProperties');
 const AdminCreateProperty = () => import('@/pages/admin/AdminCreateProperty');
 const EditProperty = () => import('@/pages/admin/EditProperty');
 const AssignProperty = () => import('@/pages/admin/AssignProperty');
+const AssignProperties = () => import('@/pages/admin/AssignProperties');
 const CreateUser = () => import('@/pages/admin/CreateUser');
 const ManageUsers = () => import('@/pages/admin/ManageUsers');
 const EditUser = () => import('@/pages/admin/EditUser');
@@ -28,12 +29,15 @@ const EditProject = () => import('@/pages/admin/EditProject');
 // Manager pages
 const ManagerLogin = () => import('@/pages/manager/ManagerLogin');
 const ManagerProperties = () => import('@/pages/manager/ManagerProperties');
+const ManagerEditProperty = () => import('@/pages/manager/EditProperty');
+const ManagerSettings = () => import('@/pages/manager/ManagerSettings');
 
 
 // Owner pages
 const UserLogin = () => import('@/pages/user/UserLogin');
 const UserProperties = () => import('@/pages/user/UserProperties');
-
+const UserEditProperty = () => import('@/pages/user/EditProperty');
+const UserSettings = () => import('@/pages/user/UserSettings');
 
 const routes = [
   {
@@ -49,6 +53,11 @@ const routes = [
     path: '/manager/login',
     name: 'ManagerLogin',
     component: ManagerLogin
+  },
+  {
+    path: '/user/login',
+    name: 'UserLogin',
+    component: UserLogin
   },
 
   // Auth Routes Below
@@ -92,11 +101,11 @@ const routes = [
         name: 'EditProperty',
         component: EditProperty
       },
-      // {
-      //   path: 'assign-property',
-      //   name: 'Admin Properties',
-      //   component: AdminProperties
-      // },
+      {
+        path: 'assign-property',
+        name: 'Assign Properties',
+        component: AssignProperties
+      },
       {
         path: 'assign-property/create',
         name: 'Assign Property',
@@ -210,23 +219,53 @@ const routes = [
         path: 'properties',
         name: 'Manager Properties',
         component: ManagerProperties
+      },
+      {
+        path: ':id/edit-property',
+        name: 'ManagerEditProperty',
+        component: ManagerEditProperty
+      },
+      {
+        path: 'settings',
+        name: 'ManagerSettings',
+        component: ManagerSettings
       }
     ]
   },
   {
     path: '/user',
     name: 'UserRoutes',
+    beforeEnter: (to, from, next) =>{
+      if(!localStorage.token)
+      {
+          window.location.href='/user/login';
+      }
+      if(!localStorage.user)
+      {
+          window.location.href='/user/login';
+      }
+      if(!localStorage.role)
+      {
+          window.location.href='/user/login';
+      }
+      next();
+    },
     children: 
     [
-      {
-        path: 'login',
-        name: 'User Login',
-        component: UserLogin
-      },
       {
         path: 'properties',
         name: 'User Properties',
         component: UserProperties
+      },
+      {
+        path: ':id/edit-property',
+        name: 'UserEditProperty',
+        component: UserEditProperty
+      },
+      {
+        path: 'settings',
+        name: 'UserSettings',
+        component: UserSettings
       }
     ]
   },
