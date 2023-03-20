@@ -46,8 +46,8 @@
                                 <div class="form-group">
                                     <label class="form-label">Property Manager</label>
                                     <div class="form-control-wrap">
-                                        <ChoiceSelect size="sm" id="property_manager" :cross="false" @change="updateManager" v-if="managers !== null">
-                                            <ChoiceSelectOption selected disabled>Search for Property Manager</ChoiceSelectOption>
+                                        <ChoiceSelect multiple size="sm" id="property_managers" :cross="false" @change="updateManager" v-if="managers !== null">
+                                            <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
                                             <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
@@ -222,8 +222,8 @@ export default {
       error: '',
       success:'',
       form: {
-        owner: '',
-        manager: '',
+        owners: [],
+        managers: [],
         bedroom: '',
         project: '',
         country: '',
@@ -353,8 +353,10 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
       }
+      
       axios.post(this.baseURL+'/api/admin/create/property', this.form, { headers })
       .then(response => {
+        console.log(response);
         if(!response.data.status)
         {
           if(response.data.errors)
@@ -388,18 +390,32 @@ export default {
         this.form.currency= '',
         this.form.estimated_rent= ''
       })
-      .catch(function () {
-        // console.log(e);
+      .catch(function (e) {
+        console.log(e);
       });
       
     },
-    updateOwner(e)
+    updateOwner()
     {
-      this.form.owner = e.target.value;
+        var items = [];
+        var elem = document.querySelector("#owner");
+        var options = elem.selectedOptions;
+        for(var i=0; i<options.length;i++){
+            items[i] = options[i].value;
+        }
+        this.form.owners = items;
     },
-    updateManager(e)
+    updateManager()
     {
-      this.form.manager = e.target.value;
+        
+        var items = [];
+        var elem = document.querySelector("#property_managers");
+        var options = elem.selectedOptions;
+        for(var i=0; i<options.length;i++){
+            items[i] = options[i].value;
+        }
+        this.form.managers = items;
+        console.log(this.form.managers);
     },
     updateProject(e)
     {

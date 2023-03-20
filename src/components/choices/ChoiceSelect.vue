@@ -48,7 +48,7 @@ export default {
                 searchPlaceholderValue: 'Search',
                 shouldSort: this.sort,
                 removeItemButton: this.cross,
-                itemSelectText: this.selectText
+                itemSelectText: this.selectText,
             });
         }
     },
