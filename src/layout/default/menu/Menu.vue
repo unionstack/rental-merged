@@ -45,127 +45,127 @@ if (role == "admin") {
         id: uuidv4(),
         icon: 'grid-alt',
         title: 'Properties',
-        url: '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Manage Properties',
-                url: '/admin/properties'
-            },
-            {
-                id: uuidv4(),
-                title: 'Create Property',
-                url: '/admin/property/create'
-            },
-        ]
+        url: '/admin/properties',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Manage Properties',
+        //         url: '/admin/properties'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Property',
+        //         url: '/admin/property/create'
+        //     },
+        // ]
     },
     {
         id: uuidv4(),
         icon: 'building-fill',
         title: 'Assign Properties',
-        url:   '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Manage Assigned Properties',
-                url: '/admin/assign-property'
-            },
-            {
-                id: uuidv4(),
-                title: 'Assign Property',
-                url: '/admin/assign-property/create'
-            },
-        ]
+        url:   '/admin/assign-property',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Manage Assigned Properties',
+        //         url: '/admin/assign-property'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Assign Property',
+        //         url: '/admin/assign-property/create'
+        //     },
+        // ]
     },
     {
         id: uuidv4(),
         icon: 'users',
         title: 'Owners',
-        url:   '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Owners',
-                url: '/admin/users'
-            },
-            {
-                id: uuidv4(),
-                title: 'Create Owner',
-                url: '/admin/user/create'
-            },
-        ]
+        url:   '/admin/users',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Owners',
+        //         url: '/admin/users'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Owner',
+        //         url: '/admin/user/create'
+        //     },
+        // ]
     },
     {
         id: uuidv4(),
         icon: 'users',
         title: 'Managers',
-        url:   '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Managers',
-                url: '/admin/managers'
-            },
-            {
-                id: uuidv4(),
-                title: 'Create Manager',
-                url: '/admin/manager/create'
-            },
-        ]
+        url:   '/admin/managers',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Managers',
+        //         url: '/admin/managers'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Manager',
+        //         url: '/admin/manager/create'
+        //     },
+        // ]
     },
     {
         id: uuidv4(),
         icon: 'users',
         title: 'Bedrooms',
-        url:   '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Manage Bedrooms',
-                url: '/admin/bedrooms'
-            },
-            {
-                id: uuidv4(),
-                title: 'Create Bedroom',
-                url: '/admin/bedroom/create'
-            },
-        ]
+        url:   '/admin/bedrooms',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Manage Bedrooms',
+        //         url: '/admin/bedrooms'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Bedroom',
+        //         url: '/admin/bedroom/create'
+        //     },
+        // ]
     },
     {
         id: uuidv4(),
         icon: 'coin',
         title: 'Currencies',
-        url:   '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Manage Currencies',
-                url: '/admin/currencies'
-            },
-            {
-                id: uuidv4(),
-                title: 'Create Currnecy',
-                url: '/admin/currency/create'
-            },
-        ]
+        url:   '/admin/currencies',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Manage Currencies',
+        //         url: '/admin/currencies'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Currnecy',
+        //         url: '/admin/currency/create'
+        //     },
+        // ]
     },
     {
         id: uuidv4(),
         icon: 'file-docs',
         title: 'Projects',
-        url:   '',
-        subMenus: [
-            {
-                id: uuidv4(),
-                title: 'Manage Projects',
-                url: '/admin/projects'
-            },
-            {
-                id: uuidv4(),
-                title: 'Create Project',
-                url: '/admin/project/create'
-            },
-        ]
+        url:   '/admin/projects',
+        // subMenus: [
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Manage Projects',
+        //         url: '/admin/projects'
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         title: 'Create Project',
+        //         url: '/admin/project/create'
+        //     },
+        // ]
     },
 ]    
 }else if(role == "manager"){

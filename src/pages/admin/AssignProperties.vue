@@ -8,7 +8,7 @@
                 <h3 class="title mb-3">Assign Properties</h3>
               </CardTitle>
               <CardTools>
-                <!-- <Button type="button" variant="danger" soft class="" style="float:right;" as="RouterLink" to="">Delete Multiple Addresses</Button>  -->
+                <Button type="button" variant="primary" soft class="" style="float:right;" as="RouterLink" to="/admin/assign-property/create"><Icon icon="plus"/> Assign Property</Button> 
                 <!-- <Button type="button" variant="danger" soft class="mx-1" style="float:right;" as="RouterLink" to="">Deactivate Selected Items</Button>  -->
               </CardTools>
             </CardTitleGroup>
@@ -64,7 +64,7 @@
   import CardBody from '@/components/uielements/card/CardBody.vue';
   import CardTitleGroup from '@/components/uielements/card/CardTitleGroup.vue';
   import CardTitle from '@/components/uielements/card/CardTitle.vue';
-//   import Icon from '@/components/icon/Icon.vue';
+  import Icon from '@/components/icon/Icon.vue';
   import Button from '@/components/uielements/button/Button.vue';
   import CardTools from '@/components/uielements/card/CardTools.vue';
   import TableHead from '@/components/utilities/table/TableHead.vue';
@@ -86,7 +86,7 @@
       CardBody,
       CardTitleGroup,
       CardTitle,
-    //   Icon,
+      Icon,
       // Media,
       Button,
       CardTools,
