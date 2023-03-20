@@ -191,6 +191,29 @@ if (role == "admin") {
     }
 ]
 }
+else if(role == "user"){
+    menuData = [
+
+    {
+        id: uuidv4(),
+        icon: 'grid-alt',
+        title: 'Dashboard',
+        url: '/user/properties',
+    },
+    {
+        id: uuidv4(),
+        icon: 'account-setting-alt',
+        title: 'Setting',
+        url: '/user/settings',
+    },
+    {
+        id: uuidv4(),
+        icon: 'chevron-left-round',
+        title: 'Logout',
+        url: '/user/logout',
+    }
+]
+}
 
 
 export default {

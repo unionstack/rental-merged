@@ -36,7 +36,8 @@ const ManagerSettings = () => import('@/pages/manager/ManagerSettings');
 // Owner pages
 const UserLogin = () => import('@/pages/user/UserLogin');
 const UserProperties = () => import('@/pages/user/UserProperties');
-
+const UserEditProperty = () => import('@/pages/user/EditProperty');
+const UserSettings = () => import('@/pages/user/UserSettings');
 
 const routes = [
   {
@@ -52,6 +53,11 @@ const routes = [
     path: '/manager/login',
     name: 'ManagerLogin',
     component: ManagerLogin
+  },
+  {
+    path: '/user/login',
+    name: 'UserLogin',
+    component: UserLogin
   },
 
   // Auth Routes Below
@@ -229,17 +235,37 @@ const routes = [
   {
     path: '/user',
     name: 'UserRoutes',
+    beforeEnter: (to, from, next) =>{
+      if(!localStorage.token)
+      {
+          window.location.href='/user/login';
+      }
+      if(!localStorage.user)
+      {
+          window.location.href='/user/login';
+      }
+      if(!localStorage.role)
+      {
+          window.location.href='/user/login';
+      }
+      next();
+    },
     children: 
     [
-      {
-        path: 'login',
-        name: 'User Login',
-        component: UserLogin
-      },
       {
         path: 'properties',
         name: 'User Properties',
         component: UserProperties
+      },
+      {
+        path: ':id/edit-property',
+        name: 'UserEditProperty',
+        component: UserEditProperty
+      },
+      {
+        path: 'settings',
+        name: 'UserSettings',
+        component: UserSettings
       }
     ]
   },

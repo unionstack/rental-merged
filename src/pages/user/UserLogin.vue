@@ -14,7 +14,10 @@
                                                     <h3 class="nk-block-title mb-1">Login to Account</h3>
                                                 </div>
                                             </div>
-                                            <form action="/" id="loginForm">
+                                            <div class="alert alert-danger" v-if="showError">
+                                                {{ error }}
+                                            </div>
+                                            <form id="loginForm" ref="form" @submit.prevent="login">
                                                 <Row utils="gy-3">
                                                     <Col lg="12">
                                                         <FormGroup>
@@ -38,7 +41,7 @@
                                                     </Col>
                                                     <Col lg="12">
                                                         <div class="">
-                                                            Forgot your Password? Click <router-link to="#">here</router-link> to reset your Password.
+                                                            Forgot your password? Click <router-link to="#">here</router-link> to reset your password.
                                                         </div>
                                                     </Col>
                                                     <Col lg="12">
@@ -80,6 +83,7 @@ import Button from '@/components/uielements/button/Button.vue';
 import FormInputIcon from '@/components/forms/input/FormInputIcon.vue';
 import Icon from '@/components/icon/Icon.vue';
 import FormGroup from '@/components/forms/FormGroup.vue';
+import axios from 'axios';
 
 export default {
     name: 'AuthLoginPage',
@@ -105,17 +109,35 @@ export default {
     },
     data(){
         return{
-            credentials:{
-                email:'info@softnio.com',
-                password: '123456'
-            },
+            showError: false,
+            error: '',
             authForm:{
-                email:'info@softnio.com',
-                password: '123456',
-                showError: false
+                email:'',
+                password: ''
             },
-
+            baseURL: process.env.VUE_APP_API_URL,
         }
     },
+    methods: {
+        login(e){
+            e.preventDefault();
+            axios.post(this.baseURL+'/api/user/login', this.authForm).then(response => {
+                if(!response.data.status)
+                {
+                    this.error = response.data.message;
+                    this.showError = true;
+                    return;
+                }
+                localStorage.setItem('token', JSON.stringify(response.data.token));
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('role', JSON.stringify('user'));
+                this.$router.push('/user/properties');
+            })
+            .catch(error => {
+                this.error = error.response.data;
+                this.showError = true;
+            });
+        }
+    }
 }
 </script>
