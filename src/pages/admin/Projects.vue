@@ -62,8 +62,8 @@
             </ModalBody>
             <ModalFooter> 
               <input type="hidden" id="delete_id" value="" />
-              <Button type="button" size="sm" variant="secondary" soft dismiss="modal" id="close">Close</Button> 
-              <Button type="submit" size="sm" variant="danger" soft>Delete</Button> 
+              <Button type="button" variant="secondary" soft dismiss="modal" id="close">Close</Button> 
+              <Button type="submit" variant="danger" soft>Delete</Button> 
             </ModalFooter>
           </ModalContent>
           </form>
