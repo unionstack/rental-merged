@@ -116,6 +116,12 @@ if (role == "admin") {
     {
         id: uuidv4(),
         icon: 'users',
+        title: 'Tenants',
+        url:   '/admin/tenants',
+    },
+    {
+        id: uuidv4(),
+        icon: 'home-fill',
         title: 'Bedrooms',
         url:   '/admin/bedrooms',
         // subMenus: [

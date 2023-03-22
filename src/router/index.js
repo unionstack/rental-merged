@@ -15,6 +15,9 @@ const EditUser = () => import('@/pages/admin/EditUser');
 const Managers = () => import('@/pages/admin/Managers');
 const CreateManager = () => import('@/pages/admin/CreateManager');
 const EditManager = () => import('@/pages/admin/EditManager');
+const ManageTenants = () => import('@/pages/admin/Tenants');
+const CreateTenants = () => import('@/pages/admin/CreateTenant');
+const EditTenant = () => import('@/pages/admin/EditTenant');
 const Bedrooms = () => import('@/pages/admin/Bedrooms');
 const EditBedroom = () => import('@/pages/admin/EditBedroom');
 const CreateBedrooms = () => import('@/pages/admin/CreateBedrooms');
@@ -116,6 +119,21 @@ const routes = [
       //   name: 'EditProperty',
       //   component: EditProperty
       // },
+      {
+        path: 'tenants',
+        name: 'Manage Tenants',
+        component: ManageTenants
+      },
+      {
+        path: ':id/edit-tenant/',
+        name: 'EditTenant',
+        component: EditTenant
+      },
+      {
+        path: 'tenant/create',
+        name: 'Create Tenants',
+        component: CreateTenants
+      },
       {
         path: 'users',
         name: 'Manage Users',
