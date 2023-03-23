@@ -173,6 +173,18 @@ if (role == "admin") {
         //     },
         // ]
     },
+    {
+        id: uuidv4(),
+        icon: 'account-setting-alt',
+        title: 'Setting',
+        url: '/admin/settings',
+    },
+    {
+        id: uuidv4(),
+        icon: 'signout',
+        title: 'Logout',
+        url:   '/admin/logout',
+    }
 ]    
 }else if(role == "manager"){
     menuData = [
@@ -189,6 +201,12 @@ if (role == "admin") {
         title: 'Setting',
         url: '/manager/settings',
     },
+    {
+        id: uuidv4(),
+        icon: 'signout',
+        title: 'Logout',
+        url:   '/manager/logout',
+    }
     // {
     //     id: uuidv4(),
     //     icon: 'chevron-left-round',
@@ -214,9 +232,9 @@ else if(role == "user"){
     },
     {
         id: uuidv4(),
-        icon: 'chevron-left-round',
+        icon: 'signout',
         title: 'Logout',
-        url: '/user/logout',
+        url:   '/user/logout',
     }
 ]
 }
@@ -326,3 +344,4 @@ export default {
   }
 }
 </script>
+

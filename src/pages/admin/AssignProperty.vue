@@ -33,7 +33,7 @@
                         <div class="row g-3 gx-gs mb-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Property</label>
+                                    <label class="form-label">Property <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="properties" :cross="false" @change="updateProperty" v-if="properties !== null">
                                             <ChoiceSelectOption selected disabled>Search for Property</ChoiceSelectOption>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Property Manager</label>
+                                    <label class="form-label">Property Manager <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <!-- <select multiple="true" v-model="form.managers" class="form-control form-select" v-if="managers !== null">
                                             <option :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</option>

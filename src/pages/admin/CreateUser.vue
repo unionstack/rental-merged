@@ -33,7 +33,7 @@
                   <div class="row g-3 gx-gs mb-4">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">First Name</label>
+                              <label  class="form-label">First Name <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" placeholder="Enter First Name" v-model="form.first_name" required/>
                               </div>
@@ -41,7 +41,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">Last Name</label>
+                              <label  class="form-label">Last Name <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" placeholder="Enter Last Name" v-model="form.last_name" required/>
                               </div>
@@ -49,7 +49,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">Email</label>
+                              <label  class="form-label">Email <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="email" placeholder="Enter Email" v-model="form.email" required/>
                               </div>
@@ -65,7 +65,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">Password</label>
+                              <label  class="form-label">Password <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="password" placeholder="Enter Password" v-model="form.password" required/>
                               </div>
@@ -73,7 +73,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label class="form-label">Currency</label>
+                              <label class="form-label">Currency <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <ChoiceSelect size="sm" id="currency" :cross="false" @change="updateCurrency" required>
                                       <ChoiceSelectOption selected disabled>Search for Currency</ChoiceSelectOption>

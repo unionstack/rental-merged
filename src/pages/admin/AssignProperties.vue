@@ -25,7 +25,7 @@
                   {{ success }}
               </div>
 
-              <div class="table-responsive">
+              <div class="table-responsive px-2">
                 <DataTable id="datatable-init-2" class="table-border" v-if="properties !== null">
                   <TableHead>
                       <tr>

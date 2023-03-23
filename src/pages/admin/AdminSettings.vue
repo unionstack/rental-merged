@@ -127,7 +127,7 @@
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        axios.post(this.baseURL+'/api/user/change-password', this.form, { headers })
+        axios.post(this.baseURL+'/api/admin/change-password', this.form, { headers })
         .then(response => {
           if(!response.data.status)
           {

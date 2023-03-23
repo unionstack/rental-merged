@@ -25,7 +25,7 @@
                     <Nav />
                 </nav>
                 <div class="nk-header-tools">
-                    <QuickNav class="ms-2">
+                    <!-- <QuickNav class="ms-2">
                         <QuickNavItem class="dropdown">
                             <QuickNavLink data-bs-toggle="dropdown">
                                 <div class="d-sm-none">
@@ -41,7 +41,7 @@
                             </QuickNavLink>
                             <UserProfileDropdown />
                         </QuickNavItem>
-                    </QuickNav>
+                    </QuickNav> -->
                 </div><!-- .nk-header-tools -->
             </div><!-- .nk-header-wrap -->
         </div><!-- .container-fliud -->
@@ -53,32 +53,32 @@
 
 <script>
 // import components
-import Img from '@/components/img/Img.vue';
+// import Img from '@/components/img/Img.vue';
 import Nav from '@/layout/default/nav/Nav.vue';
-import Media from '@/components/media/Media.vue';
+// import Media from '@/components/media/Media.vue';
 import Icon from '@/components/icon/Icon.vue';
-import QuickNav from '@/components/quicknav/QuickNav.vue';
-import QuickNavItem from '@/components/quicknav/QuickNavItem.vue';
-import QuickNavLink from '@/components/quicknav/QuickNavLink.vue';
+// import QuickNav from '@/components/quicknav/QuickNav.vue';
+// import QuickNavItem from '@/components/quicknav/QuickNavItem.vue';
+// import QuickNavLink from '@/components/quicknav/QuickNavLink.vue';
 import Logo from '@/components/logo/Logo.vue';
 import Button from '@/components/uielements/button/Button.vue';
 import NotificationOffcanvas from '@/components/user/NotificationOffcanvas.vue';
-import UserProfileDropdown from '@/components/user/UserProfileDropdown.vue';
+// import UserProfileDropdown from '@/components/user/UserProfileDropdown.vue';
 
 export default {
   name: 'AppHeader',
   components: {
-    Img,
+    // Img,
     Nav,
-    Media,
+    // Media,
     Icon,
-    QuickNav,
-    QuickNavItem,
-    QuickNavLink,
+    // QuickNav,
+    // QuickNavItem,
+    // QuickNavLink,
     Logo,
     Button,
     NotificationOffcanvas,
-    UserProfileDropdown
+    // UserProfileDropdown
   },
   mounted(){
     let Break = { mb: 420, sm: 576, md: 768, lg: 992, xl: 1200, xxl: 1540, any: Infinity };

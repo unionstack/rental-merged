@@ -33,7 +33,7 @@
                   <div class="row g-3 gx-gs mb-4">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">Name</label>
+                              <label  class="form-label">Name <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" v-model="form.name" required placeholder="Enter Currency Name"/>
                                   <p class="formError" v-if="firstNameError">*{{ firstNameError }}</p>
