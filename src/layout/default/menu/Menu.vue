@@ -189,12 +189,12 @@ if (role == "admin") {
         title: 'Setting',
         url: '/manager/settings',
     },
-    {
-        id: uuidv4(),
-        icon: 'chevron-left-round',
-        title: 'Logout',
-        url: '/manager/logout',
-    }
+    // {
+    //     id: uuidv4(),
+    //     icon: 'chevron-left-round',
+    //     title: 'Logout',
+    //     url: '/manager/logout',
+    // }
 ]
 }
 else if(role == "user"){

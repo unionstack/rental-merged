@@ -37,7 +37,7 @@
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="properties" :cross="false" @change="updateProperty" v-if="properties !== null">
                                             <ChoiceSelectOption selected disabled>Search for Property</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="property.id" v-for="(property, index) in properties" v-bind:key="index">{{ property.owner_id }} - {{ property.bedroom_id }} - {{ property.list_price }}  {{ property.currency_id }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="property.id" v-for="(property, index) in properties" v-bind:key="index">{{ property.bedroom_id }} - {{ property.list_price }}  {{ property.currency_id }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
@@ -46,9 +46,13 @@
                                 <div class="form-group">
                                     <label class="form-label">Property Manager</label>
                                     <div class="form-control-wrap">
-                                        <select multiple="true" v-model="form.managers" class="form-control form-select" v-if="managers !== null">
+                                        <!-- <select multiple="true" v-model="form.managers" class="form-control form-select" v-if="managers !== null">
                                             <option :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</option>
-                                        </select>
+                                        </select> -->
+                                        <ChoiceSelect multiple size="sm" id="property_managers" :cross="false" @change="updateManager" v-if="managers !== null">
+                                            <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }} ({{ manager.email }})</ChoiceSelectOption>
+                                        </ChoiceSelect>
                                     </div>
                                 </div>
                             </div>
@@ -186,6 +190,17 @@ export default {
         // console.log(e);
       });
       
+    },
+    updateManager()
+    {
+        
+        var items = [];
+        var elem = document.querySelector("#property_managers");
+        var options = elem.selectedOptions;
+        for(var i=0; i<options.length;i++){
+            items[i] = options[i].value;
+        }
+        this.form.managers = items;
     },
     updateProperty(e)
     {

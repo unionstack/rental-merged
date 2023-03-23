@@ -24,8 +24,8 @@
                 <DataTable id="datatable-init-2" class="table-border" v-if="properties !== null">
                   <TableHead>
                       <tr>
-                          <th><OverlineTitle tag="span">Owner</OverlineTitle></th>
-                          <th><OverlineTitle tag="span">Manager</OverlineTitle></th>
+                          <th><OverlineTitle tag="span">Owners</OverlineTitle></th>
+                          <th><OverlineTitle tag="span">Managers</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Project</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Bedrooms</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Price</OverlineTitle></th>
@@ -34,8 +34,16 @@
                   </TableHead>
                   <TableBody>
                     <tr v-for="(property, index) in properties" v-bind:key="index">
-                        <td>{{ property.owner_id }}</td>
-                        <td>{{ property.property_manager_id }}</td>
+                        <td>
+                          <select class="form-control" v-if="property.owners !== null">
+                            <option v-for="(owner, a) in property.owners" v-bind:key="a">{{ owner.first_name }} {{ owner.last_name }} ({{ owner.email }})</option>  
+                          </select>
+                        </td>
+                        <td>
+                          <select class="form-control" v-if="property.managers !== null">
+                            <option v-for="(manager, b) in property.managers" v-bind:key="b">{{ manager.first_name }} {{ manager.last_name }} ({{ manager.email }})</option>  
+                          </select>
+                        </td>
                         <td>{{ property.project_id }}</td>
                         <td>{{ property.bedroom_id }}</td>
                         <td>{{ property.list_price }} {{ property.currency_id }}</td>
@@ -183,7 +191,6 @@
           if(response.data.status)
           {
             this.properties = response.data.data;
-            // console.log(this.properties);
           }
         });
       },

@@ -18,30 +18,37 @@
       <Row utils="g-gs">
         <Col xxl="12">
           <Card full>
+              <div class="alert alert-danger" v-if="showError">
+                  {{ error }}
+              </div>
+              <div class="alert alert-success" v-if="showSuccess">
+                  {{ success }}
+              </div>
+
               <div class="table-responsive">
                 <DataTable id="datatable-init-2" class="table-border" v-if="properties !== null">
                   <TableHead>
                       <tr>
-                          <th><OverlineTitle tag="span">Property Owner</OverlineTitle></th>
-                          <th><OverlineTitle tag="span">Property Managers</OverlineTitle></th>
-                          <th><OverlineTitle tag="span">Project</OverlineTitle></th>
-                          <th><OverlineTitle tag="span">Bedrooms</OverlineTitle></th>
-                          <th><OverlineTitle tag="span">Price</OverlineTitle></th>
+                          <th><OverlineTitle tag="span">Property</OverlineTitle></th>
+                          <th><OverlineTitle tag="span">Managers</OverlineTitle></th>
                           <th><OverlineTitle tag="span"></OverlineTitle></th>
                       </tr>
                   </TableHead>
                   <TableBody>
                     <tr v-for="(property, index) in properties" v-bind:key="index">
-                        <td>{{ property.property.owner_id }}</td>
-                        <td>{{ property.property_manager_id }}</td>
-                        <td>{{ property.project_id }}</td>
-                        <td>{{ property.bedroom_id }}</td>
-                        <td>{{ property.list_price }} {{ property.currency_id }}</td>
+                        <td>
+                          {{ property.title }}
+                        </td>
+                        <td>
+                          <select class="form-control">
+                            <option v-for="(man, index) in property.managers" v-bind:key="index">{{ man.first_name }} {{ man.last_name }} ({{ man.email }})</option>
+                          </select>
+                        </td>
                         <td class="d-flex justify-content-end">
-                            <router-link :to="{ name: 'EditProperty', params: { id: property.id } }">
+                            <!-- <router-link :to="{ name: 'EditProperty', params: { id: property.id } }">
                               <Button type="button" variant="primary" soft>Edit</Button> 
-                            </router-link>
-                            <Button type="button" variant="danger" soft class="mx-2"  as="RouterLink" to="">Delete</Button> 
+                            </router-link> -->
+                            <Button type="submit" variant="danger" soft class="mx-2" :id="`del-`+property.id">Delete</Button> 
                         </td>
                     </tr>
                   </TableBody>
@@ -50,6 +57,29 @@
           </Card>
         </Col>
       </Row>
+
+      <!-- Delete Modal -->
+    <ModalContainer animation="fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+      <ModalDialog>
+          <form @submit.prevent="deleteRecord">
+          <ModalContent>
+            <ModalHeader>
+                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                <ButtonClose dismiss="modal"></ButtonClose>
+            </ModalHeader>
+            <ModalBody>
+              Are you sure you want to delete this record?
+            </ModalBody>
+            <ModalFooter> 
+              <input type="hidden" id="delete_id" value="" />
+              <Button type="button" variant="secondary" soft dismiss="modal" id="close">Close</Button> 
+              <Button type="submit" variant="danger" soft>Delete</Button> 
+            </ModalFooter>
+          </ModalContent>
+          </form>
+      </ModalDialog>
+    </ModalContainer>
+
     </Layout>
 
 
@@ -71,9 +101,17 @@
   import TableBody from '@/components/utilities/table/TableBody.vue';
   import OverlineTitle from '@/components/misc/OverlineTitle.vue';
   import DataTable from '@/components/data-tables/SimpleDataTable.vue';
+  import ModalContainer from '@/components/uielements/modal/ModalContainer.vue';
+  import ModalDialog from '@/components/uielements/modal/ModalDialog.vue';
+  import ModalContent from '@/components/uielements/modal/ModalContent.vue';
+  import ModalHeader from '@/components/uielements/modal/ModalHeader.vue';
+  import ModalBody from '@/components/uielements/modal/ModalBody.vue';
+  import ModalFooter from '@/components/uielements/modal/ModalFooter.vue';
+  import ButtonClose from '@/components/uielements/button-close/ButtonClose.vue';
   import axios from 'axios';
 
-
+  import $ from 'jquery';
+  import { Modal } from 'bootstrap';
 
   
   export default {
@@ -94,17 +132,48 @@
       TableBody,
       OverlineTitle,
       DataTable,
+      ModalContainer,
+      ModalDialog,
+      ModalContent,
+      ModalHeader,
+      ModalBody,
+      ModalFooter,
+      ButtonClose
      
   },
     data(){
       return {
         properties: null,
+        showError: false,
+        showSuccess: false,
+        success: null,
         baseURL: process.env.VUE_APP_API_URL
       }
     },
     created(){
       this.fetchProperties();
     },
+    mounted() {
+      $('body').on('click', 'button', (event) => {
+        const button = $(event.target);
+        var idStr = button[0].id;
+        var ex = idStr.split("-");
+        var id = ex[1];
+
+        if(ex[0] == 'del'){
+          //delete modal
+          $("#deleteModal #delete_id").val(id);
+          const modal = new Modal("#deleteModal");
+          modal.show();
+        }
+        else if(ex[0] == 'edit')
+        {
+          // edit modal
+
+        }
+        
+      });
+  },
     methods: {
       fetchProperties(){
 
@@ -120,10 +189,38 @@
           if(response.data.status)
           {
             this.properties = response.data.data;
-            // console.log(this.properties);
+            console.log(this.properties);
           }
         });
-      }
+      },
+      deleteRecord(e){
+        
+        e.preventDefault();
+
+        var token = localStorage.token;
+        var id = $("#delete_id").val();
+
+        var headers = { 
+            'Authorization': 'Bearer '+ JSON.parse(token), 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        var data = {
+          id: id
+        }
+        axios.post(this.baseURL+'/api/admin/assigned-properties/delete', data, { headers })
+        .then(response => {
+          if(response.data.status)
+          {
+            // this.properties = response.data.data;
+            window.location.reload();
+            this.showError = false;
+            this.success = response.data.message;
+            this.showSuccess = true;
+            console.log(response);
+          }
+        });
+      },
     }
   }
   </script>

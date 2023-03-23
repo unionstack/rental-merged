@@ -31,45 +31,38 @@
                             {{ success }}
                         </div>
                         <div class="row g-3 gx-gs mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Owner</label>
                                     <div class="form-control-wrap">
-                                        <select multiple="true" v-model="form.owner" class="form-control form-select" v-if="owners !== null">
+                                        <!-- <select multiple="true" v-model="form.owner" class="form-control form-select" v-if="owners !== null">
                                             <option :value="owner.id" v-for="(owner, index) in owners" v-bind:key="index">{{ owner.first_name }} {{ owner.email }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Property Manager</label>
-                                    <div class="form-control-wrap">
-                                        <ChoiceSelect size="sm" id="property_manager" :cross="false" @change="updateManager" v-if="managers !== null">
-                                            <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</ChoiceSelectOption>
+                                        </select> -->
+                                        <ChoiceSelect multiple size="sm" id="owner" :cross="false" @change="updateOwner">
+                                            <ChoiceSelectOption disabled>Select Owners</ChoiceSelectOption>
+                                            <ChoiceSelectOption :selected="owner.isSelected" :value="owner.id" v-for="(owner, index) in owners" v-bind:key="index" >{{ owner.first_name }} {{ owner.last_name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
-                            </div> -->
-                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Bedrooms</label>
                                     <div class="form-control-wrap">
-                                        <ChoiceSelect size="sm" id="bedrooms" :cross="false" v-model="form.owner"  v-if="bedrooms !== null">
+                                        <ChoiceSelect size="sm" id="bedrooms" :cross="false" >
                                             <ChoiceSelectOption disabled>Search for Bedrooms</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="bedroom.id" v-for="(bedroom, index) in bedrooms" v-bind:key="index">{{ bedroom.name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :selected="bedroom.id == form.bedroom" :value="bedroom.id" v-for="(bedroom, index) in bedrooms" v-bind:key="index">{{ bedroom.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Project</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="project" :cross="false" @change="updateProject" v-if="projects !== null">
                                             <ChoiceSelectOption disabled>Search for Project</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="project.id" v-for="(project, index) in projects" v-bind:key="index">{{ project.name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :selected="project.id == form.project" :value="project.id" v-for="(project, index) in projects" v-bind:key="index">{{ project.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
@@ -154,13 +147,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Currency</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="currency" :cross="false" @change="updateCurrency" v-if="currencies !== null">
                                             <ChoiceSelectOption selected disabled>Search for Currency</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="currency.id" v-for="(currency, index) in currencies" v-bind:key="index">{{ currency.name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :selected="currency.id == form.currency" :value="currency.id" v-for="(currency, index) in currencies" v-bind:key="index">{{ currency.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
@@ -244,15 +237,16 @@ export default {
       projects: null,
       currencies: null,
       bedrooms: null,
+      selectLoaded:false,
       baseURL: process.env.VUE_APP_API_URL,
     }
   },
   created(){
     this.fetchOwners();
     // this.fetchManagers();
+    this.fetchBedrooms();
     this.fetchProjects();
     this.fetchCurrencies();
-    this.fetchBedrooms()
     this.fetchProperties();
   },
   methods: {
@@ -303,6 +297,7 @@ export default {
         .then(response => {
         if(response.data.status)
         {
+            console.log(response.data);
             this.bedrooms = response.data.data;
         }
         });
@@ -339,22 +334,30 @@ export default {
         {
             this.property_data = response.data.data;
             // console.log(this.property_data);
-            this.form.owner         = this.property_data[0].owner_id,
+            this.form.owner         = this.property_data[0].owner_id;
             // this.form.manager       = this.property_data[0].property_manager_id,
-            this.form.bedroom       = this.property_data[0].bedroom_id,
-            this.form.project       = this.property_data[0].project_id,
-            this.form.country       = this.property_data[0].country,
-            this.form.county        = this.property_data[0].county,
-            this.form.zip_code      = this.property_data[0].zip_code,
-            this.form.address       = this.property_data[0].address,
-            this.form.phone         = this.property_data[0].number,
-            this.form.type          = this.property_data[0].type,
-            this.form.area          = this.property_data[0].area,
-            this.form.building      = this.property_data[0].building_tex,
-            this.form.floor         = this.property_data[0].floor,
-            this.form.list_price    = this.property_data[0].list_price,
-            this.form.currency      = this.property_data[0].currency_id,
-            this.form.estimated_rent= this.property_data[0].estimated_rent
+            this.form.bedroom       = this.property_data[0].bedroom_id;
+            this.form.project       = this.property_data[0].project_id;
+            this.form.country       = this.property_data[0].country;
+            this.form.county        = this.property_data[0].county;
+            this.form.zip_code      = this.property_data[0].zip_code;
+            this.form.address       = this.property_data[0].address;
+            this.form.phone         = this.property_data[0].number;
+            this.form.type          = this.property_data[0].type;
+            this.form.area          = this.property_data[0].area;
+            this.form.building      = this.property_data[0].building_tex;
+            this.form.floor         = this.property_data[0].floor;
+            this.form.list_price    = this.property_data[0].list_price;
+            this.form.currency      = this.property_data[0].currency_id;
+            this.form.estimated_rent= this.property_data[0].estimated_rent;
+
+            this.owners.forEach((item)=>{
+                let res = this.form.owner.includes(String(item.id));
+                item.isSelected = res;
+            });
+
+            this.selectLoaded = true;
+            console.log(this.selectLoaded)
         }
         });
     },
@@ -397,9 +400,16 @@ export default {
       });
       
     },
-    updateOwner(e)
+    updateOwner()
     {
-      this.form.owner = e.target.value;
+        var items = [];
+        var elem = document.querySelector("#owner");
+        var options = elem.selectedOptions;
+        for(var i=0; i<options.length;i++){
+            items[i] = options[i].value;
+        }
+        this.form.owner = items;
+        console.log(this.form.owner);
     },
     updateManager(e)
     {

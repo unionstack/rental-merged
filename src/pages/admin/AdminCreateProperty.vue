@@ -33,7 +33,7 @@
                         <div class="row g-3 gx-gs mb-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Owner</label>
+                                    <label class="form-label">Owners</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect multiple size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
                                             <ChoiceSelectOption disabled>Search for Owner</ChoiceSelectOption>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Property Manager</label>
+                                    <label class="form-label">Property Managers</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect multiple size="sm" id="property_managers" :cross="false" @change="updateManager" v-if="managers !== null">
                                             <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
@@ -356,7 +356,6 @@ export default {
       
       axios.post(this.baseURL+'/api/admin/create/property', this.form, { headers })
       .then(response => {
-        console.log(response);
         if(!response.data.status)
         {
           if(response.data.errors)

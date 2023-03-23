@@ -67,25 +67,25 @@
                           </div>
                       </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" v-if="selectLoaded">
                     <div class="form-group">
                         <label class="form-label">Property</label>
                         <div class="form-control-wrap">
                             <ChoiceSelect size="sm" id="properties" :cross="false" @change="updateProperty" v-if="properties !== null">
                                 <ChoiceSelectOption selected disabled>Search for Property</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="property.id" v-for="(property, index) in properties" v-bind:key="index">{{ property.project_id}} - {{ property.bedroom_id }} - {{ property.list_price }}  {{ property.currency_id }}</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="property.id" :selected="property.isSelected" v-for="(property, index) in properties" v-bind:key="index">{{ property.project_id}} - {{ property.bedroom_id }} - {{ property.list_price }}  {{ property.currency_id }}</ChoiceSelectOption>
                             </ChoiceSelect>
                         </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" v-if="selectLoaded">
                     <div class="form-group">
                         <label class="form-label">Active</label>
                         <div class="form-control-wrap">
                             <ChoiceSelect size="sm" id="active" :cross="false" @change="updateActive">
                                 <ChoiceSelectOption selected disabled>Select</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="Yes">Yes</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="No">No</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="Yes" :selected="form.active == 'Yes'">Yes</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="No" :selected="form.active == 'No'">No</ChoiceSelectOption>
                             </ChoiceSelect>
                         </div>
                     </div>
@@ -106,24 +106,24 @@
                         </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" v-if="selectLoaded">
                     <div class="form-group">
                         <label class="form-label">Period(Months)</label>
                         <div class="form-control-wrap">
                             <ChoiceSelect size="sm" id="period" :cross="false" @change="updatePeriod">
                                 <ChoiceSelectOption selected disabled>Select Period(Months)</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="1">1</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="2">2</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="3">3</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="4">4</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="5">5</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="6">6</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="7">7</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="8">8</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="9">9</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="10">10</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="11">11</ChoiceSelectOption>
-                                <ChoiceSelectOption :value="12">12</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="1" :selected="form.period == 1">1</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="2" :selected="form.period == 2">2</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="3" :selected="form.period == 3">3</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="4" :selected="form.period == 4">4</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="5" :selected="form.period == 5">5</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="6" :selected="form.period == 6">6</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="7" :selected="form.period == 7">7</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="8" :selected="form.period == 8">8</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="9" :selected="form.period == 9">9</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="10" :selected="form.period == 10">10</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="11" :selected="form.period == 11">11</ChoiceSelectOption>
+                                <ChoiceSelectOption :value="12" :selected="form.period == 12">12</ChoiceSelectOption>
                             </ChoiceSelect>
                         </div>
                     </div>
@@ -201,12 +201,13 @@ export default {
         },
         baseURL: process.env.VUE_APP_API_URL,
         tenant_data: '',
-        properties:null
+        properties:null,
+        selectLoaded:false
     }
   },
   created(){
-    this.fetchTenant();
     this.fetchProperties();
+    this.fetchTenant();
   },
   methods: {
     fetchProperties(){
@@ -250,6 +251,17 @@ export default {
           this.form.contract_end = this.tenant_data[0].contract_end;
           this.form.period = this.tenant_data[0].period;
           this.form.real_contract_end = this.tenant_data[0].real_contract_end;
+
+          this.properties.forEach((item)=>{
+                if(this.form.property == item.id)
+                {
+                  item.isSelected = true;
+                }else{
+                  item.isSelected = false;
+                }
+          });
+          this.selectLoaded = true;
+          
         }
       });
     },

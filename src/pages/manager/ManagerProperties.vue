@@ -22,7 +22,7 @@
                 <DataTable id="datatable-init-2" class="table-border" v-if="properties !== null">
                   <TableHead>
                       <tr>
-                          <th><OverlineTitle tag="span">Owner</OverlineTitle></th>
+                          <th><OverlineTitle tag="span">Owners</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Project</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Bedrooms</OverlineTitle></th>
                           <th><OverlineTitle tag="span">Area</OverlineTitle></th>
@@ -32,16 +32,20 @@
                   </TableHead>
                   <TableBody>
                     <tr v-for="(property, index) in properties" v-bind:key="index">
-                      <td v-if="property.owner !== null">
-                        <div v-for="(property_owner, index2) in property.owner" v-bind:key="index2">
-                          <span>{{ property_owner }}</span> 
-                        </div>
-                         
+                      <td v-if="property.owners !== null">
+                        <!-- <div v-for="(property_owner, index2) in property.owners" v-bind:key="index2">
+                          <span>{{ property_owner.first_name }}</span> 
+                        </div> -->
+                        <select class="form-control">
+                          <option v-for="(owner, index3) in property.owners" v-bind:key="index3">
+                            {{ owner.first_name }} {{ owner.last_name }} ({{ owner.email }})
+                          </option>
+                        </select>
                       </td>
                       <td>{{ property.project }}</td>
                       <td>{{ property.bedroom }}</td>
-                      <td>{{ property.property.area }}</td>
-                      <td>{{ property.property.list_price }} {{ property.currency }}</td>
+                      <td>{{ property.area }}</td>
+                      <td>{{ property.list_price }} {{ property.currency }}</td>
                       <td class="d-flex justify-content-end">
                           <Button type="button" :id="`view-`+property.id+`-`+index" variant="info" soft class="mx-2">View Details</Button>
                           <router-link :to="{ name: 'ManagerEditProperty', params: { id: property.id } }">
@@ -70,9 +74,14 @@
                         <label for=""><b>Owners: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;" v-for="(owner_name, index3) in pro_d.owner" v-bind:key="index3">
-                          {{ owner_name }} <br>
-                        </p>
+                        <!-- <p class="mb-0" style="font-size:13px;" v-for="(owner, index3) in pro_d.owners" v-bind:key="index3">
+                          {{ owner.first_name }} {{ owner.last_name }}
+                        </p> -->
+                        <select class="form-control">
+                          <option v-for="(owner, index3) in pro_d.owners" v-bind:key="index3">
+                            {{ owner.first_name }} {{ owner.last_name }} ({{ owner.email }})
+                          </option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -102,7 +111,7 @@
                         <label for=""><b>Address: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.address}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.address}}</p>
                       </div>
                     </div>
                   </div>
@@ -112,7 +121,7 @@
                         <label for=""><b>Country: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.country}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.country}}</p>
                       </div>
                     </div>
                   </div>
@@ -122,7 +131,7 @@
                         <label for=""><b>County: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.county}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.county}}</p>
                       </div>
                     </div>
                   </div>
@@ -132,7 +141,7 @@
                         <label for=""><b>Zip Code: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.zip_code}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.zip_code}}</p>
                       </div>
                     </div>
                   </div>
@@ -142,7 +151,7 @@
                         <label for=""><b>Type: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.type}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.type}}</p>
                       </div>
                     </div>
                   </div>
@@ -152,7 +161,7 @@
                         <label for=""><b>Area: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.area}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.area}}</p>
                       </div>
                     </div>
                   </div>
@@ -162,7 +171,7 @@
                         <label for=""><b>Building: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.building_tex}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.building_tex}}</p>
                       </div>
                     </div>
                   </div>
@@ -172,7 +181,7 @@
                         <label for=""><b>Floor: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.floor}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.floor}}</p>
                       </div>
                     </div>
                   </div>
@@ -182,7 +191,7 @@
                         <label for=""><b>Estimated Rent: </b></label>
                       </div>
                       <div>
-                        <p class="mb-0" style="font-size:13px;">{{pro_d.property.estimated_rent}}</p>
+                        <p class="mb-0" style="font-size:13px;">{{pro_d.estimated_rent}}</p>
                       </div>
                     </div>
                   </div>
@@ -299,7 +308,7 @@
           {
             // console.log(response.data.data);
             this.properties = response.data.data;
-            this.owners = this.properties.owner;
+            this.owners = this.properties.owners;
             // console.log(response.data.data);
           }
         });

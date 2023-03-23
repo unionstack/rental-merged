@@ -31,46 +31,45 @@
                             {{ success }}
                         </div>
                         <div class="row g-3 gx-gs mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Owner</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect multiple size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
-                                            <ChoiceSelectOption disabled>Search for Owner</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="owner.id" v-for="(owner, index) in owners" v-bind:key="index">{{ owner.first_name }} ({{ owner.email }})</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="owner.id" v-for="owner in owners" :selected="owner.isSelected" v-bind:key="owner.id" >{{ owner.first_name }} {{ owner.last_name }} ({{ owner.email }})</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Property Manager</label>
                                     <div class="form-control-wrap">
-                                        <ChoiceSelect size="sm" id="property_manager" :cross="false" @change="updateManager" v-if="managers !== null">
+                                        <ChoiceSelect multiple size="sm" id="property_managers" :cross="false" @change="updateManager" v-if="managers !== null">
                                             <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="manager.id" v-for="(manager, index) in managers" :selected="manager.isSelected" v-bind:key="index">{{ manager.first_name }} {{ manager.last_name }} ({{ manager.email }})</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Bedrooms</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="bedrooms" :cross="false" @change="updateBedroom" v-if="bedrooms !== null">
                                             <ChoiceSelectOption disabled>Search for Bedrooms</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="bedroom.id" v-for="(bedroom, index) in bedrooms" v-bind:key="index">{{ bedroom.name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="bedroom.id" v-for="(bedroom, index) in bedrooms" :selected="bedroom.id == form.bedroom" v-bind:key="index">{{ bedroom.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Project</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="project" :cross="false" @change="updateProject" v-if="projects !== null">
                                             <ChoiceSelectOption disabled>Search for Project</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="project.id" v-for="(project, index) in projects" v-bind:key="index">{{ project.name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="project.id" :selected="project.id == form.project" v-for="(project, index) in projects" v-bind:key="index">{{ project.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
@@ -155,13 +154,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
                                     <label class="form-label">Currency</label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="currency" :cross="false" @change="updateCurrency" v-if="currencies !== null">
                                             <ChoiceSelectOption selected disabled>Search for Currency</ChoiceSelectOption>
-                                            <ChoiceSelectOption :value="currency.id" v-for="(currency, index) in currencies" v-bind:key="index">{{ currency.name }}</ChoiceSelectOption>
+                                            <ChoiceSelectOption :value="currency.id" :selected="currency.id == form.currency" v-for="(currency, index) in currencies" v-bind:key="index">{{ currency.name }}</ChoiceSelectOption>
                                         </ChoiceSelect>
                                     </div>
                                 </div>
@@ -223,8 +222,8 @@ export default {
       error: '',
       success:'',
       form: {
-        owner: '',
-        manager: '',
+        owner: [],
+        manager: [],
         bedroom: '',
         project: '',
         country: '',
@@ -242,6 +241,8 @@ export default {
       },
       owners: null,
       managers: null,
+      selectLoaded: false,
+      loadManager: false,
       projects: null,
       currencies: null,
       bedrooms: null,
@@ -356,7 +357,6 @@ export default {
         if(response.data.status)
         {
             this.property_data = response.data.data;
-            // console.log(this.property_data);
             this.form.owner         = this.property_data[0].owner_id,
             this.form.manager       = this.property_data[0].property_manager_id,
             this.form.bedroom       = this.property_data[0].bedroom_id,
@@ -373,6 +373,19 @@ export default {
             this.form.list_price    = this.property_data[0].list_price,
             this.form.currency      = this.property_data[0].currency_id,
             this.form.estimated_rent= this.property_data[0].estimated_rent
+
+            this.owners.forEach((item)=>{
+                let res = this.form.owner.includes(String(item.id));
+                item.isSelected = res;
+            });
+
+            this.managers.forEach((item)=>{
+                let res = this.form.manager.includes(String(item.id));
+                item.isSelected = res;
+            });
+
+            this.selectLoaded = true;
+
         }
         });
     },
@@ -389,6 +402,16 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
       }
+
+    //   if(this.form.owner == "")
+    //   {
+    //     this.form.owner = null;
+    //   }
+    //   if(this.form.manager == "")
+    //   {
+    //     this.form.manager = null;
+    //   }
+
       axios.post(this.baseURL+'/api/admin/property/'+this.id+'/update', this.form, { headers })
       .then(response => {
         if(!response.data.status)
@@ -411,17 +434,30 @@ export default {
 
       })
       .catch(function () {
-        // console.log(e);
+
       });
       
     },
-    updateOwner(e)
+    updateOwner()
     {
-      this.form.owner = e.target.value;
+        var items = [];
+        var elem = document.querySelector("#owner");
+        var options = elem.selectedOptions;
+        for(var i=0; i<options.length;i++){
+            items[i] = options[i].value;
+        }
+        this.form.owner = items;
     },
-    updateManager(e)
+    updateManager()
     {
-      this.form.manager = e.target.value;
+        
+        var items = [];
+        var elem = document.querySelector("#property_managers");
+        var options = elem.selectedOptions;
+        for(var i=0; i<options.length;i++){
+            items[i] = options[i].value;
+        }
+        this.form.manager = items;
     },
     updateProject(e)
     {
@@ -434,7 +470,7 @@ export default {
     updateCurrency(e)
     {
       this.form.currency = e.target.value;
-    }
+    },
   }
 }
 </script>
