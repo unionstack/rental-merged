@@ -18,7 +18,7 @@
       <Row utils="g-gs">
         <Col xxl="12">
           <Card full>
-              <div class="table-responsive" v-if="!loading">
+              <div class="table-responsive px-2" v-if="!loading">
                 <DataTable id="datatable-init-2" class="table-border">
                   <TableHead>
                       <tr>

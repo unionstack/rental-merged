@@ -20,7 +20,7 @@
     <Row utils="g-gs">
       <Col xxl="12">
         <Card full>
-            <div class="table-responsive">
+            <div class="table-responsive px-2">
               <DataTable id="datatable-init-2" class="table-border" v-if="currencies !== null">
                 <TableHead>
                     <tr>

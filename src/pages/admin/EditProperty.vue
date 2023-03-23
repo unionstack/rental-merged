@@ -33,7 +33,7 @@
                         <div class="row g-3 gx-gs mb-4">
                             <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
-                                    <label class="form-label">Owner</label>
+                                    <label class="form-label">Owner <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect multiple size="sm" id="owner" :cross="false" @change="updateOwner" v-if="owners !== null">
                                             <ChoiceSelectOption :value="owner.id" v-for="owner in owners" :selected="owner.isSelected" v-bind:key="owner.id" >{{ owner.first_name }} {{ owner.last_name }} ({{ owner.email }})</ChoiceSelectOption>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
-                                    <label class="form-label">Property Manager</label>
+                                    <label class="form-label">Property Manager <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect multiple size="sm" id="property_managers" :cross="false" @change="updateManager" v-if="managers !== null">
                                             <ChoiceSelectOption disabled>Search for Property Manager</ChoiceSelectOption>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
-                                    <label class="form-label">Bedrooms</label>
+                                    <label class="form-label">Bedrooms <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="bedrooms" :cross="false" @change="updateBedroom" v-if="bedrooms !== null">
                                             <ChoiceSelectOption disabled>Search for Bedrooms</ChoiceSelectOption>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
-                                    <label class="form-label">Project</label>
+                                    <label class="form-label">Project <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="project" :cross="false" @change="updateProject" v-if="projects !== null">
                                             <ChoiceSelectOption disabled>Search for Project</ChoiceSelectOption>
@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label  class="form-label">Country</label>
+                                    <label  class="form-label">Country <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.country" placeholder="Enter Country"/>
                                     </div>
@@ -84,7 +84,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label  class="form-label">County</label>
+                                    <label  class="form-label">County <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.county" placeholder="Enter County"/>
                                     </div>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label  class="form-label">Zip Code</label>
+                                    <label  class="form-label">Zip Code <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.zip_code" placeholder="Enter Zip Code"/>
                                     </div>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Address</label>
+                                    <label  class="form-label">Address <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.address" placeholder="Enter Address"/>
                                     </div>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Number</label>
+                                    <label  class="form-label">Number <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.phone" placeholder="Enter Number"/>
                                     </div>
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Type</label>
+                                    <label  class="form-label">Type <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.type" placeholder="Enter Type"/>
                                     </div>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Area(M2)</label>
+                                    <label  class="form-label">Area(M2) <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="number" v-model="form.area" placeholder="Enter Area"/>
                                     </div>
@@ -132,7 +132,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Building</label>
+                                    <label  class="form-label">Building <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="text" v-model="form.building" placeholder="Enter Building"/>
                                     </div>
@@ -140,7 +140,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Floor</label>
+                                    <label  class="form-label">Floor <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="number" v-model="form.floor" placeholder="Enter Floor"/>
                                     </div>
@@ -148,7 +148,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">List Price</label>
+                                    <label  class="form-label">List Price <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="number" v-model="form.list_price" placeholder="Enter List price"/>
                                     </div>
@@ -156,7 +156,7 @@
                             </div>
                             <div class="col-md-6" v-if="selectLoaded">
                                 <div class="form-group">
-                                    <label class="form-label">Currency</label>
+                                    <label class="form-label">Currency <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <ChoiceSelect size="sm" id="currency" :cross="false" @change="updateCurrency" v-if="currencies !== null">
                                             <ChoiceSelectOption selected disabled>Search for Currency</ChoiceSelectOption>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label  class="form-label">Estimated Rent</label>
+                                    <label  class="form-label">Estimated Rent <span class="text-danger">*</span></label>
                                     <div class="form-control-wrap">
                                         <FormInput type="number" v-model="form.estimated_rent" placeholder="Enter Estimated Rent"/>
                                     </div>

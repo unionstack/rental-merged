@@ -33,7 +33,7 @@
                     <div class="row g-3 gx-gs mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label  class="form-label">Old Password</label>
+                                <label  class="form-label">Old Password <span class="text-danger">*</span></label>
                                 <div class="form-control-wrap">
                                     <FormInput type="password"  v-model="form.old_password" placeholder="Enter Bedrooms" required/>
                                 </div>
@@ -43,7 +43,7 @@
                     <div class="row g-3 gx-gs mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label  class="form-label">New Password</label>
+                                <label  class="form-label">New Password <span class="text-danger">*</span></label>
                                 <div class="form-control-wrap">
                                     <FormInput type="password"  v-model="form.new_password" placeholder="Enter Bedrooms" required/>
                                 </div>
@@ -53,7 +53,7 @@
                     <div class="row g-3 gx-gs mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label  class="form-label">Confirm New Password</label>
+                                <label  class="form-label">Confirm New Password <span class="text-danger">*</span></label>
                                 <div class="form-control-wrap">
                                     <FormInput type="password"  v-model="form.confirm_password" placeholder="Enter Bedrooms" required/>
                                 </div>

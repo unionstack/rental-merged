@@ -27,6 +27,8 @@ const EditCurrency = () => import('@/pages/admin/EditCurrency');
 const Projects = () => import('@/pages/admin/Projects');
 const CreateProject = () => import('@/pages/admin/CreateProject');
 const EditProject = () => import('@/pages/admin/EditProject');
+const AdminSetting = () => import('@/pages/admin/AdminSettings');
+const AdminLogout = () => import('@/pages/admin/Logout');
 
 
 // Manager pages
@@ -34,6 +36,7 @@ const ManagerLogin = () => import('@/pages/manager/ManagerLogin');
 const ManagerProperties = () => import('@/pages/manager/ManagerProperties');
 const ManagerEditProperty = () => import('@/pages/manager/EditProperty');
 const ManagerSettings = () => import('@/pages/manager/ManagerSettings');
+const ManagerLogout = () => import('@/pages/manager/Logout');
 
 
 // Owner pages
@@ -41,6 +44,7 @@ const UserLogin = () => import('@/pages/user/UserLogin');
 const UserProperties = () => import('@/pages/user/UserProperties');
 const UserEditProperty = () => import('@/pages/user/EditProperty');
 const UserSettings = () => import('@/pages/user/UserSettings');
+const UserLogout = () => import('@/pages/user/Logout');
 
 const routes = [
   {
@@ -209,6 +213,16 @@ const routes = [
         name: 'EditProject',
         component: EditProject
       },
+      {
+        path: 'settings',
+        name: 'AdminSetting',
+        component: AdminSetting
+      },
+      {
+        path: 'logout',
+        name: 'AdminLogout',
+        component: AdminLogout
+      },
 
 
     ]
@@ -247,7 +261,12 @@ const routes = [
         path: 'settings',
         name: 'ManagerSettings',
         component: ManagerSettings
-      }
+      },
+      {
+        path: 'logout',
+        name: 'ManagerLogout',
+        component: ManagerLogout
+      },
     ]
   },
   {
@@ -284,7 +303,12 @@ const routes = [
         path: 'settings',
         name: 'UserSettings',
         component: UserSettings
-      }
+      },
+      {
+        path: 'logout',
+        name: 'UserLogout',
+        component: UserLogout
+      },
     ]
   },
 

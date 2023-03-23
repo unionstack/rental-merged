@@ -33,7 +33,7 @@
                   <div class="row g-3 gx-gs mb-4">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">First Name</label>
+                              <label  class="form-label">First Name <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" v-model="form.first_name" required placeholder="Enter First Name"/>
                                   <p class="formError" v-if="firstNameError">*{{ firstNameError }}</p>
@@ -42,7 +42,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">Last Name</label>
+                              <label  class="form-label">Last Name <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="text" v-model="form.last_name" required placeholder="Enter Last Name"/>
                                   <p class="formError" v-if="lastNameError">*{{ lastNameError }}</p>
@@ -51,7 +51,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label  class="form-label">Email</label>
+                              <label  class="form-label">Email <span class="text-danger">*</span></label>
                               <div class="form-control-wrap">
                                   <FormInput type="email" v-model="form.email" disabled required placeholder="Enter Email"/>
                                   
